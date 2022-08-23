@@ -41,7 +41,11 @@
             class="input-error input-xxlarge"
             v-model="keyWord"
           />
-          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="gotoSearch">
+          <button
+            class="sui-btn btn-xlarge btn-danger"
+            type="button"
+            @click="gotoSearch"
+          >
             搜索
           </button>
         </form>
@@ -51,23 +55,34 @@
 </template>
 
 <script>
-
-
 export default {
   data() {
     return {
-      keyWord:""
+      keyWord: "",
     };
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（访问DOM元素）
-    mounted() { },
-    methods: {
-        gotoSearch() {
-         this.$router.push("/search/"+this.keyWord)
-    }
-  }
+  mounted() {},
+  methods: {
+    gotoSearch() {
+      //字符串形式
+      // this.$router.push(
+      //   "/search/" + this.keyWord + "?k=" + this.keyWord.toUpperCase()
+      // );
+
+      //模板字符串
+      // this.$router.push(
+      //   `/search/${this.keyWord}?k=${this.keyWord.toUpperCase()}`
+      // );
+
+      this.$router.push({
+        name: "search",
+        query: { dd: this.keyWord},
+      });
+    },
+  },
 };
 </script>
 <style scoped lang="less">
