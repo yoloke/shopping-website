@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import TypeNav from './TypeNav/index.vue';
 import ListContainer from './ListContainer/index.vue';
 import Recommend from './Recommend/index.vue';
 import Rank from './Rank/index.vue';
@@ -37,7 +36,7 @@ export default {
     //生命周期 - 挂载完成（访问DOM元素）
     mounted() {
     },
-    components: { TypeNav, ListContainer, Recommend, Rank, Like, Floor, Brand }
+    components: { ListContainer, Recommend, Rank, Like, Floor, Brand }
 }
 </script>
 <style scoped>

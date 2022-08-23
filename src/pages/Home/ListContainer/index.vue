@@ -8,7 +8,7 @@
         <div class="swiper-container" id="mySwiper">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
+              <img src="./images/banner4.jpg" />
             </div>
           </div>
           <!-- 如果需要分页器 -->
@@ -105,27 +105,21 @@ export default {
   margin: 0 auto;
 
   .sortList {
-    height: 464px;
+    height: 454px;
     padding-left: 210px;
-
     .center {
-      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
       width: 740px;
       height: 100%;
-      padding: 5px;
       float: left;
     }
-    .center img{
-      width: 100%;
-    }
-
     .right {
       float: left;
       width: 250px;
 
       .news {
         border: 1px solid #e4e4e4;
-        margin-top: 5px;
 
         h4 {
           border-bottom: 1px solid #e4e4e4;
@@ -260,7 +254,7 @@ export default {
       }
 
       .ads {
-        margin-top: 5px;
+        margin-top: 7px;
 
         img {
           opacity: 0.8;

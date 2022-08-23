@@ -30,7 +30,7 @@
     <div class="bottom">
       <h1 class="logoArea">
         <router-link class="logo" to="/home">
-          <img src="./images/logo.png" alt="" />
+          <img src="https://img1.360buyimg.com/da/jfs/t1/16273/9/11655/153805/5c90a4f3E683206d9/eef283b0ed619fe4.gif?v=0.8424603522027347" alt="" />
         </router-link>
       </h1>
       <div class="searchArea">
@@ -127,24 +127,23 @@ export default {
   }
 
   & > .bottom {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
     width: 1200px;
     margin: 0 auto;
     overflow: hidden;
 
     .logoArea {
-      float: left;
-
       .logo {
         img {
-          width: 175px;
-          margin: 25px 45px;
+          width: 100px;
+          margin: 0 45px;
         }
       }
     }
 
     .searchArea {
-      float: right;
-      margin-top: 35px;
 
       .searchForm {
         overflow: hidden;
@@ -154,7 +153,7 @@ export default {
           width: 490px;
           height: 32px;
           padding: 0px 4px;
-          border: 2px solid #ea4a36;
+          border: 2px solid #ff6700;
           float: left;
 
           &:focus {
@@ -165,7 +164,7 @@ export default {
         button {
           height: 32px;
           width: 68px;
-          background-color: #ea4a36;
+          background-color: #ff6700;
           border: none;
           color: #fff;
           float: left;
