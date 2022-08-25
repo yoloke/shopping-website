@@ -3,7 +3,68 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <h2 class="all">全部商品分类</h2>
+      <div @mouseleave="leaveIndex()">
+        <!-- 商品详情导航展示 -->
+        <h2 class="all">全部商品分类</h2>
+        <div class="sort">
+          <!-- 事件委派+编程时导航 实现路由跳转 -->
+          <div class="all-sort-list2" @click="goSearch">
+            <ul>
+              <!-- li循环列表 -->
+              <li
+                class="item"
+                v-for="(c1, index) in categoryList.slice(0, 14)"
+                :key="c1.categoryId"
+              >
+                <h3
+                  @mouseenter="changeIndex(index)"
+                  :class="{ active: currentIndex == index }"
+                >
+                  <!-- 一级分类标题 -->
+                  <a
+                    class="c1"
+                    :data-categoryName="c1.categoryName"
+                    :data-category1Id="c1.categoryId"
+                    >{{ c1.categoryName }}</a
+                  >
+                </h3>
+                <!-- 二三级分类 -->
+                <div
+                  class="item-list clearfix"
+                  :style="{ display: currentIndex == index ? 'block' : 'none' }"
+                >
+                  <div
+                    class="subitem"
+                    v-for="c2 in c1.categoryChild"
+                    :key="c2.categoryId"
+                  >
+                    <dl class="fore">
+                      <dt>
+                        <a
+                          :data-categoryName="c2.categoryName"
+                          :data-category2Id="c2.categoryId"
+                          >{{ c2.categoryName }}</a
+                        >
+                      </dt>
+                      <dd>
+                        <!-- 三级分离 -->
+                        <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                          <a
+                            :data-categoryName="c3.categoryName"
+                            :data-category3Id="c3.categoryId"
+                            >{{ c3.categoryName }}</a
+                          >
+                        </em>
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- 导航栏 -->
       <nav class="nav">
         <a href="###">服装城</a>
         <a href="###">美妆馆</a>
@@ -14,52 +75,23 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-      <div class="sort">
-        <div class="all-sort-list2">
-          <!-- 一级分类 -->
-          <ul>
-            <li
-              class="item"
-              v-for="c1 in categoryList.slice(0, 14)"
-              :key="c1.categoryId"
-            >
-              <h3>
-                <a>{{ c1.categoryName }}</a>
-              </h3>
-              <!-- 二级分类 -->
-              <div class="item-list clearfix">
-                <div
-                  class="subitem"
-                  v-for="c2 in c1.categoryChild"
-                  :key="c2.categoryId"
-                >
-                  <dl class="fore">
-                    <dt>
-                      <a href="">{{ c2.categoryName }}</a>
-                    </dt>
-                    <dd>
-                      <!-- 三级分离 -->
-                      <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                        <a href="">{{ c3.categoryName }}</a>
-                      </em>
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+//全部引入，引入lodash全部函数功能
+//import _ from "lodash";
+//按需引入
+import throttle from "lodash/throttle";
+
 export default {
   name: "TypeNav",
   data() {
-    return {};
+    return {
+      currentIndex: -1,
+    };
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() {},
@@ -67,7 +99,6 @@ export default {
   mounted() {
     //通知vuex发请求，获取数据，存储在仓库种
     this.$store.dispatch("home/categoryList");
-    console.log(this.categoryList);
   },
   computed: {
     // ...mapState("home",["categoryList"])
@@ -82,6 +113,58 @@ export default {
     ...mapState({
       categoryList: (state) => state.home.categoryList,
     }),
+  },
+  methods: {
+    //鼠标移入事件
+    // changeIndex(index) {
+    //   //index鼠标移入一级分类的索引
+    //   // //鼠标进入事件,假如用户的行为过快,会导致项目业务丢失【里面业务有很多，可能出现卡顿现象】。
+    //   //一句话：用户行为过快,浏览器反应不过来,导致业务丢失!!!!
+    //   this.currentIndex = index;
+    //   console.log(index);
+    // },
+    //鼠标进入修改响应元素的背景颜色
+    //采用键值对形式创建函数，将changeIndex定义为节流函数，该函数触发很频繁时，设置50ms才会执行一次
+    //throttle回调不要用箭头函数，会有this指向问题
+    changeIndex: throttle(function (index) {
+      this.currentIndex = index;
+    }, 0),
+    //鼠标移出事件
+    leaveIndex() {
+      this.currentIndex = -1;
+    },
+    //点击事件
+    goSearch() {
+      let element = event.target
+      //html中会把大写转为小写
+      //获取目前鼠标点击标签的categoryname,category1id,category2id,category3id，
+      // 通过四个属性是否存在来判断是否为a标签，以及属于哪一个等级的a标签
+      let {categoryname,category1id,category2id,category3id} = element.dataset
+
+
+      //categoryname存在，表示为a标签
+      if(categoryname){
+        //category1id一级a标签
+        //整理路由跳转的参数
+        let location = {name:'search'}//跳转路由name
+        let query = {categoryName:categoryname}//路由参数
+
+        if(category1id){
+          query.category1Id = category1id
+        }else if(category2id){
+        //category2id二级a标签
+          query.category2Id = category2id
+        }else if(category3id){
+        //category3id三级a标签
+          query.category3Id = category3id
+        }
+        //整理完参数
+        location.query = query
+        //路由跳转
+        this.$router.push(location)
+
+      }
+    },
   },
 };
 </script>
@@ -101,9 +184,9 @@ export default {
       height: 45px;
       line-height: 45px;
       text-align: center;
-      color: #ff6700;
+      color: #fff;
+      background-color: #ff6700;
       border: 2px solid #ff6700;
-      border-bottom: none;
       font-size: 14px;
       font-weight: bold;
     }
@@ -120,44 +203,38 @@ export default {
 
     .sort {
       position: absolute;
-      display: flex;
-      align-items: center;
       left: 0;
       top: 45px;
       margin-top: 2px;
       width: 210px;
       height: 454px;
       position: absolute;
-      background: rgba(234, 234, 234);
-      // box-shadow: 2px 0 5px rgb(0 0 0 / 30%);
+      background: #ff6700;
       z-index: 999;
 
       .all-sort-list2 {
         width: 100%;
         .item {
           h3 {
-            line-height: 30px;
-            font-size: 15px;
-            overflow: hidden;
-            padding: 0 20px;
-            margin: 0;
-
-            a {
-              font-weight: 700;
-              color: #333;
-              font-size: 13px;
+            .c1 {
+              display: block;
+              height: 32px;
+              line-height: 32px;
+              overflow: hidden;
+              padding: 0 20px;
+              margin: 0;
+              font-weight: normal;
+              color: #fff;
             }
           }
-
           .item-list {
             display: none;
             position: absolute;
-            width: 736px;
+            width: 735px;
             min-height: 454px;
             background-color: #fff;
-          
-            box-shadow: 2px 2px 2px rgba(0,0,0,.3);
-            border: 1px solid #e0e0e0;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+            // border: 1px solid #e0e0e0;
             left: 210px;
             top: 0;
             z-index: 9999 !important;
@@ -192,22 +269,27 @@ export default {
                   em {
                     float: left;
                     padding: 0 8px 6px 8px;
-                    
                   }
                 }
               }
               a:hover {
-                      color: #ff6700;
-                    }
+                color: #ff6700;
+              }
             }
           }
-
-          &:hover {
-            background-color: #ff6700;
-            .item-list {
-              display: block;
+          .active {
+            background-color: #fff;
+            cursor: pointer;
+            a {
+              color: #ff6700;
             }
           }
+          // &:hover {
+          //   // background-color: #fff;
+          //   .item-list {
+          //     display: block;
+          //   }
+          // }
         }
       }
     }
