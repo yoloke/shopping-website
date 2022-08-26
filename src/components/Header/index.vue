@@ -30,7 +30,10 @@
     <div class="bottom">
       <h1 class="logoArea">
         <router-link class="logo" to="/home">
-          <img src="https://img1.360buyimg.com/da/jfs/t1/16273/9/11655/153805/5c90a4f3E683206d9/eef283b0ed619fe4.gif?v=0.8424603522027347" alt="" />
+          <img
+            src="https://img1.360buyimg.com/da/jfs/t1/16273/9/11655/153805/5c90a4f3E683206d9/eef283b0ed619fe4.gif?v=0.8424603522027347"
+            alt=""
+          />
         </router-link>
       </h1>
       <div class="searchArea">
@@ -67,20 +70,16 @@ export default {
   mounted() {},
   methods: {
     gotoSearch() {
-      //字符串形式
-      // this.$router.push(
-      //   "/search/" + this.keyWord + "?k=" + this.keyWord.toUpperCase()
-      // );
-
-      //模板字符串
-      // this.$router.push(
-      //   `/search/${this.keyWord}?k=${this.keyWord.toUpperCase()}`
-      // );
-
-      this.$router.push({
+      let locations = {
         name: "search",
-        query: { dd: this.keyWord},
-      });
+        params: { keyWord: this.keyWord || undefined },
+      };
+      //确定路径当中有query参数
+      if (this.$route.query.categoryName) {
+        locations.query = this.$route.query;
+      }
+
+      this.$router.push(locations);
     },
   },
 };
@@ -128,7 +127,7 @@ export default {
 
   & > .bottom {
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
     width: 1200px;
     margin: 0 auto;
@@ -144,7 +143,6 @@ export default {
     }
 
     .searchArea {
-
       .searchForm {
         overflow: hidden;
 

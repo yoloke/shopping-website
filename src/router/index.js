@@ -35,6 +35,7 @@ export default new VueRouter({
 
         },
         {
+            name:'home',
             path: "/home",
             component: Home,
             meta: {
@@ -43,17 +44,10 @@ export default new VueRouter({
         },
         {
             name:"search",
-            path: "/search/:keyword?",
+            path: "/search/:keyWord?",
             component: Search,
             meta: {
                 show: true
-            },
-            props:($route)=>{
-            return{
-                id:$route.params.id,
-                title: $route.params.title,
-                dd:$route.query.dd
-                }
             }
         },
         {

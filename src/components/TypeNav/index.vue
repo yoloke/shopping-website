@@ -3,10 +3,11 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <div @mouseleave="leaveIndex()">
+      <div @mouseleave="leaveIndex()" @mouseenter="entershow">
         <!-- 商品详情导航展示 -->
         <h2 class="all">全部商品分类</h2>
-        <div class="sort">
+        <transition name="sort">
+           <div class="sort" v-show="show">
           <!-- 事件委派+编程时导航 实现路由跳转 -->
           <div class="all-sort-list2" @click="goSearch">
             <ul>
@@ -63,6 +64,8 @@
             </ul>
           </div>
         </div>
+        </transition>
+       
       </div>
       <!-- 导航栏 -->
       <nav class="nav">
@@ -91,15 +94,12 @@ export default {
   data() {
     return {
       currentIndex: -1,
+      show:true
     };
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（访问DOM元素）
-  mounted() {
-    //通知vuex发请求，获取数据，存储在仓库种
-    this.$store.dispatch("home/categoryList");
-  },
   computed: {
     // ...mapState("home",["categoryList"])
     //右侧需要一个函数，但使用这个计算属性的时候，右侧函数会立即执行一次
@@ -132,15 +132,17 @@ export default {
     //鼠标移出事件
     leaveIndex() {
       this.currentIndex = -1;
+      if (this.$route.name != 'home') {
+        this.show=false
+      }
     },
-    //点击事件
+    //点击_路由跳转
     goSearch() {
       let element = event.target
       //html中会把大写转为小写
       //获取目前鼠标点击标签的categoryname,category1id,category2id,category3id，
       // 通过四个属性是否存在来判断是否为a标签，以及属于哪一个等级的a标签
       let {categoryname,category1id,category2id,category3id} = element.dataset
-
 
       //categoryname存在，表示为a标签
       if(categoryname){
@@ -158,6 +160,10 @@ export default {
         //category3id三级a标签
           query.category3Id = category3id
         }
+        //点击商品分类按钮的时候,如果路径当中携带params参数,需要合并携带给search模块
+        if (this.$route.params.keyword) {
+          locations.params = this.$route.params;
+        }
         //整理完参数
         location.query = query
         //路由跳转
@@ -165,8 +171,13 @@ export default {
 
       }
     },
+    //鼠标移入显示组件
+    entershow() {
+      this.show=true
+    }
   },
 };
+
 </script>
 <style scoped lang="less">
 .type-nav {
@@ -292,7 +303,20 @@ export default {
           // }
         }
       }
+
     }
+    /*过渡动画:商品分类 进入阶段*/
+    .sort-enter {
+      height: 0px;
+    }
+
+    .sort-enter-active {
+      transition: all 0.3s;
+    }
+    .sort-enter-to {
+      height: 461px;
+    }
+
   }
 }
 </style>
