@@ -1,15 +1,27 @@
-import { reqCateGoryList } from "@/api"
+
+import api from '@/api'
 //home小仓库
 const state = {
     //服务器返回的是数组 初始化就是空数组
-    categoryList: []
+    //三级分类的数据
+    categoryList: [],
+    //轮播图的数据
+    bannerList: [],
+    //floor
 }
 const actions = {
     //通过API接口函数调用，获取三级联动数据
     async categoryList({ commit }) {
-        let result = await reqCateGoryList();
+        let result = await api.reqCateGoryList();
         if (result.code == 200) {
             commit("CATEGORY_List", result.data)
+        }
+    },
+    //获取首页轮播图数据
+    async getBannerList({ commit }) {
+        let result = await api.reqBannerList()
+        if (result.code === 200) {
+            commit("BANNERLIST", result.data)
         }
     }
     /*返回了一个promise,证明这是一个promise请求，
@@ -34,6 +46,9 @@ const mutations = {
     //把收到的三级联动数据存入state中
     CATEGORY_List(state, categoryList) {
         state.categoryList = categoryList
+    },
+    BANNERLIST(state, bannerList) {
+        state.bannerList = bannerList
     }
 }
 const getters = {}

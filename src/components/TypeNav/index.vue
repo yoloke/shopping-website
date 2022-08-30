@@ -65,7 +65,6 @@
           </div>
         </div>
         </transition>
-       
       </div>
       <!-- 导航栏 -->
       <nav class="nav">
@@ -85,7 +84,7 @@
 <script>
 import { mapState } from "vuex";
 //全部引入，引入lodash全部函数功能
-//import _ from "lodash";
+//import _ from "lodash"; 函数节流和防抖
 //按需引入
 import throttle from "lodash/throttle";
 
@@ -132,6 +131,7 @@ export default {
     //鼠标移出事件
     leaveIndex() {
       this.currentIndex = -1;
+      //如果不是在home组件 就实现鼠标移入移出的动画效果
       if (this.$route.name != 'home') {
         this.show=false
       }
@@ -218,7 +218,7 @@ export default {
       top: 45px;
       margin-top: 2px;
       width: 210px;
-      height: 454px;
+      height: 459px;
       position: absolute;
       background: #ff6700;
       z-index: 999;
@@ -242,7 +242,7 @@ export default {
             display: none;
             position: absolute;
             width: 735px;
-            min-height: 454px;
+            min-height: 459px;
             background-color: #fff;
             box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
             // border: 1px solid #e0e0e0;
@@ -305,14 +305,16 @@ export default {
       }
 
     }
-    /*过渡动画:商品分类 进入阶段*/
+    /*过渡动画:商品分类*/
+    //  进入的起点
     .sort-enter {
       height: 0px;
     }
-
+    //  进入的过程
     .sort-enter-active {
       transition: all 0.3s;
     }
+    //  进入的终点
     .sort-enter-to {
       height: 461px;
     }

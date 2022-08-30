@@ -9,11 +9,10 @@ import 'nprogress/nprogress.css';
 //1、 创建axios实例---requests
 const requests = axios.create({
     //基础路径，requests发出的请求在端口号后面会跟改baseURl
-    baseURL: '/api',
+    baseURL: '/mock',
     //超时时间
     timeout: 5000,
 })
-
 //2、配置请求拦截器
 requests.interceptors.request.use(config => {
     //config内主要是对请求头Header配置
@@ -22,7 +21,6 @@ requests.interceptors.request.use(config => {
     nprogress.start();
     return config;
 })
-
 //3、配置相应拦截器
 requests.interceptors.response.use((res) => {
     //成功的回调函数
@@ -35,6 +33,5 @@ requests.interceptors.response.use((res) => {
     console.log("响应失败" + error)
     return Promise.reject(new Error('fail'))
 })
-
 //4、对外暴露
 export default requests;

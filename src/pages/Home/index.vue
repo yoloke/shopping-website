@@ -30,6 +30,8 @@ export default {
     data() {
         return {};
     },
+    methods: {
+    },
     //生命周期 - 创建完成（访问当前this实例）
     created() {
     },
