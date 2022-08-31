@@ -19,7 +19,15 @@ export default {
             url: '/banner',
             method: 'get'
         });
+    },
+    //获取Floor数据接口
+    reqFloorList() {
+        return mockRequests({
+            url: '/floor',
+            method: 'get'
+        })
     }
+
 }
 
 

@@ -7,7 +7,8 @@ const state = {
     categoryList: [],
     //轮播图的数据
     bannerList: [],
-    //floor
+    //floor数据
+    floorLists: []
 }
 const actions = {
     //通过API接口函数调用，获取三级联动数据
@@ -23,7 +24,15 @@ const actions = {
         if (result.code === 200) {
             commit("BANNERLIST", result.data)
         }
+    },
+    //获取Floor组件的数据
+    async getFloorList({ commit }) {
+        let result = await api.reqFloorList();
+        if (result.code == 200) {
+            commit('GETFLOORLIST', result.data);
+        }
     }
+    //#region
     /*返回了一个promise,证明这是一个promise请求，
     但是我们想要的是图片中的data数据。
     没有将函数封装前我们都会通过then()回调函数拿到服务器返回的数据，
@@ -41,14 +50,20 @@ const actions = {
     //     console.log("result")
     //     console.log(result)
     // }
+    //#endregion
 }
 const mutations = {
     //把收到的三级联动数据存入state中
     CATEGORY_List(state, categoryList) {
         state.categoryList = categoryList
     },
+    //轮播图数据
     BANNERLIST(state, bannerList) {
         state.bannerList = bannerList
+    },
+    //floor数据
+    GETFLOORLIST(state, floorLists) {
+        state.floorLists = floorLists;
     }
 }
 const getters = {}
