@@ -8,6 +8,7 @@ import Home from "@/pages/Home"
 import Search from "@/pages/Search"
 import Login from "@/pages/Login"
 import Register from "@/pages/Register"
+import Detail from "@/pages/Detail"
 
 //1、先把VueRouter原型对象的push，保存一份
 let originPush = VueRouter.prototype.push;
@@ -35,7 +36,7 @@ export default new VueRouter({
 
         },
         {
-            name:'home',
+            name: 'home',
             path: "/home",
             component: Home,
             meta: {
@@ -43,7 +44,7 @@ export default new VueRouter({
             }
         },
         {
-            name:"search",
+            name: "search",
             path: "/search/:keyword?",
             component: Search,
             meta: {
@@ -57,6 +58,10 @@ export default new VueRouter({
         {
             path: "/register",
             component: Register
+        },
+        {
+            path: "/detail",
+            component: Detail
         }
     ]
 })

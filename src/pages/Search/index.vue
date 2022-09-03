@@ -75,7 +75,12 @@
                 <div class="list-wrap">
                   <div class="p-img">
                     <a target="_blank"
-                      ><img :src="item.defaultImg?item.defaultImg:'http://47.93.148.192:8080/group1/M00/02/DA/rBHu8mGxO7mAIZosAACYibCV0ks310.jpg'"
+                      ><img
+                        :src="
+                          item.defaultImg
+                            ? item.defaultImg
+                            : 'http://47.93.148.192:8080/group1/M00/02/DA/rBHu8mGxO7mAIZosAACYibCV0ks310.jpg'
+                        "
                     /></a>
                   </div>
                   <div class="price">
@@ -107,7 +112,14 @@
               </li>
             </ul>
           </div>
-         <Pagination></Pagination>
+          <!-- continues代表分页连续页码个数  一般是5和7  奇数  对称 -->
+          <Pagination
+            :total="total"
+            :pageSize="searchParams.pageSize"
+            :pageNo="searchParams.pageNo"
+            :continues="5"
+            @getPageNo="getPageNo"
+          ></Pagination>
         </div>
       </div>
     </div>
@@ -132,8 +144,8 @@ export default {
         trademark: "", //品牌的搜索条件
         order: "1:desc", //排序的参数 【默认初始值:1:desc】
         pageNo: 1, //当前分页器的页码  【默认初始值:1】
-        pageSize: 10, //代表当前一页显示几条数据 【默认初始值:10】
-      }
+        pageSize: 8, //代表当前一页显示几条数据 【默认初始值:10】
+      },
     };
   },
   methods: {
@@ -183,7 +195,7 @@ export default {
       //将order拆为两个字段orderFlag(1:2)、order(asc:desc)
       let orderFlag = this.searchParams.order.split(":")[0];
       let order = this.searchParams.order.split(":")[1];
-  
+
       //由综合到价格、由价格到综合
       if (orderFlag !== flag) {
         //点击的不是同一个按钮
@@ -199,10 +211,17 @@ export default {
       //再次发请求
       this.getData();
     },
+    //获取getPageNo
+    getPageNo(PageNo) {
+      //console.log(PageNo);
+      //父组件整理参数
+      this.searchParams.pageNo = PageNo;
+      this.getData();
+    }
   },
   components: {
     SearchSelector,
-},
+  },
   beforeMount() {
     //商品分类搜索条件
     // this.searchParams.category1Id = this.$route.query.category1Id;
@@ -217,7 +236,7 @@ export default {
     this.getData();
   },
   computed: {
-    ...mapGetters("search", ["goodsList"]),
+    ...mapGetters("search", ["goodsList","total"]),
     isOne() {
       return this.searchParams.order.indexOf("1") !== -1;
     },
@@ -499,8 +518,6 @@ export default {
           }
         }
       }
-
-    
     }
   }
 }

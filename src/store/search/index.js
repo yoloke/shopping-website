@@ -36,6 +36,9 @@ let getters = {
     // attrsList(state) {
     //     return state.searchList.attrsList.slice(0, 6);
     // }
+    total() {
+        return state.searchList.total;
+    }
 };
 
 //对外暴露

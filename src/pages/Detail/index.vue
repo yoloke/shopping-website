@@ -2,7 +2,6 @@
   <div class="detail">
     <!-- 商品分类导航 -->
     <TypeNav />
-
     <!-- 主要内容区域 -->
     <section class="con">
       <!-- 导航路径区域 -->
@@ -103,7 +102,6 @@
         </div>
       </div>
     </section>
-
     <!-- 内容详情页 -->
     <section class="product-detail">
       <aside class="aside">
@@ -351,7 +349,6 @@
   import Zoom from './Zoom/Zoom'
   export default {
     name: 'Detail',
-    
     components: {
       ImageList,
       Zoom
