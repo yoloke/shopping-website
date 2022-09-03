@@ -352,6 +352,9 @@
     components: {
       ImageList,
       Zoom
+  },
+  mounted(){
+      console.log(this.$route.params);
     }
   }
 </script>

@@ -74,14 +74,14 @@
               <li class="yui3-u-1-5" v-for="item in goodsList" :key="item.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a target="_blank"
+                    <router-link :to="`/detail/${item.id}`"
                       ><img
                         :src="
                           item.defaultImg
                             ? item.defaultImg
                             : 'http://47.93.148.192:8080/group1/M00/02/DA/rBHu8mGxO7mAIZosAACYibCV0ks310.jpg'
                         "
-                    /></a>
+                    /></router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -90,19 +90,18 @@
                     </strong>
                   </div>
                   <div class="attr">
-                    <a target="_blank" href="item.html">
+                    <router-link to="/detail">
                       <span v-html="item.title"></span>
-                    </a>
+                    </router-link>
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人收藏</i>
                   </div>
                   <div class="operate">
-                    <a
-                      href="success-cart.html"
-                      target="_blank"
+                    <router-link
+                      to="/detail"
                       class="sui-btn btn-bordered btn-danger"
-                      >加入购物车</a
+                      >加入购物车</router-link
                     >
                     <a href="javascript:void(0);" class="sui-btn btn-bordered"
                       >收藏</a
@@ -217,7 +216,7 @@ export default {
       //父组件整理参数
       this.searchParams.pageNo = PageNo;
       this.getData();
-    }
+    },
   },
   components: {
     SearchSelector,
@@ -236,7 +235,7 @@ export default {
     this.getData();
   },
   computed: {
-    ...mapGetters("search", ["goodsList","total"]),
+    ...mapGetters("search", ["goodsList", "total"]),
     isOne() {
       return this.searchParams.order.indexOf("1") !== -1;
     },
@@ -410,6 +409,10 @@ export default {
             line-height: 28px;
 
             .list-wrap {
+              &:hover {
+                box-shadow: 0 0 2px 2px #f8f8f8;
+                cursor: pointer;
+              }
               .p-img {
                 padding-left: 15px;
                 width: 215px;
