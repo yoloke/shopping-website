@@ -1,0 +1,311 @@
+{
+    "code": 200,
+    "message": "成功",
+    "data": {
+        "trademarkList": [
+            {
+                "tmId": 6,
+                "tmName": "VIVO",
+                "img":"./images/phone06.png"
+            },
+            {
+                "tmId": 3,
+                "tmName": "华为"
+            },
+            {
+                "tmId": 1,
+                "tmName": "小米"
+            },
+            {
+                "tmId": 2,
+                "tmName": "苹果"
+            },
+            {
+                "tmId": 4,
+                "tmName": "掌上豹"
+            },
+            {
+                "tmId": 27,
+                "tmName": "戴尔"
+            },
+            {
+                "tmId": 14429,
+                "tmName": "尹伟"
+            },
+            {
+                "tmId": 14419,
+                "tmName": "添加品牌"
+            },
+            {
+                "tmId": 14513,
+                "tmName": "罗飞"
+            },
+            {
+                "tmId": 15345,
+                "tmName": "真我"
+            }
+        ],
+        "attrsList": [
+            {
+                "attrId": 106,
+                "attrValueList": [
+                    "1TB",
+                    "512GB",
+                    "256GB",
+                    "128GB",
+                    "64GB及以下",
+                    "未上市"
+                ],
+                "attrName": "机身内存"
+            },
+            {
+                "attrId": 23,
+                "attrValueList": [
+                    "8G",
+                    "4G",
+                    "6G",
+                    "12G"
+                ],
+                "attrName": "运行内存"
+            },
+            {
+                "attrId": 24,
+                "attrValueList": [
+                    "128G",
+                    "256G",
+                    "32G",
+                    "512G"
+                ],
+                "attrName": "机身内存"
+            },
+            {
+                "attrId": 107,
+                "attrValueList": [
+                    "小米",
+                    "苹果",
+                    "华为"
+                ],
+                "attrName": "二级手机"
+            },
+            {
+                "attrId": 111,
+                "attrValueList": [
+                    "骁龙845",
+                    "麒麟990",
+                    "5G骁龙768G"
+                ],
+                "attrName": "CPU型号"
+            },
+            {
+                "attrId": 112,
+                "attrValueList": [
+                    "6.85-6.94英寸",
+                    "6.55-6.64英寸",
+                    "6.0-6.24英寸",
+                    "6.65-6.74英寸"
+                ],
+                "attrName": "屏幕尺寸"
+            },
+            {
+                "attrId": 37,
+                "attrValueList": [
+                    "Java",
+                    "JavaScript",
+                    "C#"
+                ],
+                "attrName": "分类"
+            },
+            {
+                "attrId": 6507,
+                "attrValueList": [
+                    "红色"
+                ],
+                "attrName": "颜色"
+            },
+            {
+                "attrId": 6511,
+                "attrValueList": [
+                    "苹果手机"
+                ],
+                "attrName": "phone"
+            }
+        ],
+        "goodsList": [
+            {
+                "id": 2,
+                "defaultImg": "http://47.93.148.192:8080/group1/M00/00/01/rBHu8l-rfvmAcbl2AAFopp2WGBQ404.jpg",
+                "title": "小米10 至尊纪念版 双模5G 骁龙865 120HZ高刷新率 120倍长焦镜头 120W快充 12GB+256GB 陶瓷黑 游戏手机",
+                "price": 6999,
+                "createTime": null,
+                "tmId": null,
+                "tmName": null,
+                "category1Id": null,
+                "category1Name": null,
+                "category2Id": null,
+                "category2Name": null,
+                "category3Id": null,
+                "category3Name": null,
+                "hotScore": 0,
+                "attrs": null
+            },
+            {
+                "id": 6,
+                "defaultImg": "http://47.93.148.192:8080/group1/M00/00/01/rBHu8l-rgJqAHPnoAAF9hoDNfsc505.jpg",
+                "title": "Redmi 10X 4G Helio G85游戏芯 4800万超清四摄 5020mAh大电量 小孔全面屏 128GB大存储 8GB+128GB 冰雾白 游戏智能手机 小米 红米",
+                "price": 1299,
+                "createTime": null,
+                "tmId": null,
+                "tmName": null,
+                "category1Id": null,
+                "category1Name": null,
+                "category2Id": null,
+                "category2Name": null,
+                "category3Id": null,
+                "category3Name": null,
+                "hotScore": 0,
+                "attrs": null
+            },
+            {
+                "id": 16,
+                "defaultImg": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-sklaALrngAAHGDqdpFtU741.jpg",
+                "title": "华为 HUAWEI P40 麒麟990 5G SoC芯片 5000万超感知徕卡三摄 30倍数字变焦 8GB+128GB亮黑色全网通5G手机",
+                "price": 4488,
+                "createTime": null,
+                "tmId": null,
+                "tmName": null,
+                "category1Id": null,
+                "category1Name": null,
+                "category2Id": null,
+                "category2Name": null,
+                "category3Id": null,
+                "category3Name": null,
+                "hotScore": 0,
+                "attrs": null
+            },
+            {
+                "id": 21,
+                "defaultImg": "http://47.93.148.192:8080/group1/M00/02/DA/rBHu8mGxO7mAIZosAACYibCV0ks310.jpg",
+                "title": "vivo S10 5G手机 8GB+256GB 青柠 超轻薄机身 前置4400万超清双摄 自然柔光人像 6nm旗舰芯片 拍照手机 青色",
+                "price": 2424,
+                "createTime": null,
+                "tmId": null,
+                "tmName": null,
+                "category1Id": null,
+                "category1Name": null,
+                "category2Id": null,
+                "category2Name": null,
+                "category3Id": null,
+                "category3Name": null,
+                "hotScore": 0,
+                "attrs": null
+            },
+            {
+                "id": 17,
+                "defaultImg": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-sklaALrngAAHGDqdpFtU741.jpg",
+                "title": "华为P40 5G【白条免息可选送豪礼】全网通智能手机 支持鸿蒙HarmonyOS 零度白 8G+128G",
+                "price": 2323,
+                "createTime": null,
+                "tmId": null,
+                "tmName": null,
+                "category1Id": null,
+                "category1Name": null,
+                "category2Id": null,
+                "category2Name": null,
+                "category3Id": null,
+                "category3Name": null,
+                "hotScore": 0,
+                "attrs": null
+            },
+            {
+                "id": 11,
+                "defaultImg": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWASR1YAADsOUYB-2g312.jpg",
+                "title": "Apple iPhone 12 (A2404) 64GB 白色 支持移动联通电信5G 双卡双待手机",
+                "price": 8197,
+                "createTime": null,
+                "tmId": null,
+                "tmName": null,
+                "category1Id": null,
+                "category1Name": null,
+                "category2Id": null,
+                "category2Name": null,
+                "category3Id": null,
+                "category3Name": null,
+                "hotScore": 0,
+                "attrs": null
+            },
+            {
+                "id": 1,
+                "defaultImg": "http://47.93.148.192:8080/group1/M00/00/01/rBHu8l-rfvmAIpgZAAIvrX6L9fo612.jpg",
+                "title": "小米10 至尊纪念版 双模5G 骁龙865 120HZ高刷新率 120倍长焦镜头 120W快充 8GB+128GB 陶瓷黑 游戏手机",
+                "price": 5999,
+                "createTime": null,
+                "tmId": null,
+                "tmName": null,
+                "category1Id": null,
+                "category1Name": null,
+                "category2Id": null,
+                "category2Name": null,
+                "category3Id": null,
+                "category3Name": null,
+                "hotScore": 0,
+                "attrs": null
+            },
+            {
+                "id": 12,
+                "defaultImg": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWAVRWzAABUiOmA0ic932.jpg",
+                "title": "Apple iPhone 12 (A2404) 128GB 黑色 支持移动联通电信5G 双卡双待手机",
+                "price": 9197,
+                "createTime": null,
+                "tmId": null,
+                "tmName": null,
+                "category1Id": null,
+                "category1Name": null,
+                "category2Id": null,
+                "category2Name": null,
+                "category3Id": null,
+                "category3Name": null,
+                "hotScore": 0,
+                "attrs": null
+            },
+            {
+                "id": 7,
+                "defaultImg": "http://47.93.148.192:8080/group1/M00/00/01/rBHu8l-rgJqAHPnoAAF9hoDNfsc505.jpg",
+                "title": "Redmi 10X 4G Helio G85游戏芯 4800万超清四摄 5020mAh大电量 小孔全面屏 128GB大存储 8GB+128GB 明月灰 游戏智能手机 小米 红米",
+                "price": 1299,
+                "createTime": null,
+                "tmId": null,
+                "tmName": null,
+                "category1Id": null,
+                "category1Name": null,
+                "category2Id": null,
+                "category2Name": null,
+                "category3Id": null,
+                "category3Name": null,
+                "hotScore": 0,
+                "attrs": null
+            },
+            {
+                "id": 13,
+                "defaultImg": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-sklaALrngAAHGDqdpFtU741.jpg",
+                "title": "华为 HUAWEI P40 麒麟990 5G SoC芯片 5000万超感知徕卡三摄 30倍数字变焦 6GB+128GB亮黑色全网通5G手机",
+                "price": 4188,
+                "createTime": null,
+                "tmId": null,
+                "tmName": null,
+                "category1Id": null,
+                "category1Name": null,
+                "category2Id": null,
+                "category2Name": null,
+                "category3Id": null,
+                "category3Name": null,
+                "hotScore": 0,
+                "attrs": null
+            }
+        ],
+        "total": 64,
+        "pageSize": 10,
+        "pageNo": 1,
+        "totalPages": 7
+    },
+    "ok": true
+}

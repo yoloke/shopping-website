@@ -98,33 +98,12 @@ export default {
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() {},
-  //生命周期 - 挂载完成（访问DOM元素）
   computed: {
-    // ...mapState("home",["categoryList"])
-    //右侧需要一个函数，但使用这个计算属性的时候，右侧函数会立即执行一次
-    //注入一个参数state,是大仓库的数据
-    // ...mapState({
-    //   categoryList: (state) => {
-    //     console.log(state.home.categoryList);
-    //   }
-    // })
-    //简化
     ...mapState({
       categoryList: (state) => state.home.categoryList,
     }),
   },
   methods: {
-    //鼠标移入事件
-    // changeIndex(index) {
-    //   //index鼠标移入一级分类的索引
-    //   // //鼠标进入事件,假如用户的行为过快,会导致项目业务丢失【里面业务有很多，可能出现卡顿现象】。
-    //   //一句话：用户行为过快,浏览器反应不过来,导致业务丢失!!!!
-    //   this.currentIndex = index;
-    //   console.log(index);
-    // },
-    //鼠标进入修改响应元素的背景颜色
-    //采用键值对形式创建函数，将changeIndex定义为节流函数，该函数触发很频繁时，设置50ms才会执行一次
-    //throttle回调不要用箭头函数，会有this指向问题
     changeIndex: throttle(function (index) {
       this.currentIndex = index;
     }, 0),
@@ -137,13 +116,12 @@ export default {
       }
     },
     //点击_路由跳转
-    goSearch() {
+    goSearch(event) {
       let element = event.target
       //html中会把大写转为小写
       //获取目前鼠标点击标签的categoryname,category1id,category2id,category3id，
       // 通过四个属性是否存在来判断是否为a标签，以及属于哪一个等级的a标签
       let {categoryname,category1id,category2id,category3id} = element.dataset
-
       //categoryname存在，表示为a标签
       if(categoryname){
         //category1id一级a标签
@@ -162,13 +140,13 @@ export default {
         }
         //点击商品分类按钮的时候,如果路径当中携带params参数,需要合并携带给search模块
         if (this.$route.params.keyword) {
-          locations.params = this.$route.params;
+          location.params = this.$route.params;
         }
         //整理完参数
         location.query = query
         //路由跳转
         this.$router.push(location)
-
+        this.show = false
       }
     },
     //鼠标移入显示组件
@@ -176,6 +154,11 @@ export default {
       this.show=true
     }
   },
+  mounted() {
+    if (this.$route.name != 'home') {
+        this.show=false
+      }
+  }
 };
 
 </script>
@@ -218,7 +201,7 @@ export default {
       top: 45px;
       margin-top: 2px;
       width: 210px;
-      height: 459px;
+      height: 465px;
       position: absolute;
       background: #ff6700;
       z-index: 999;

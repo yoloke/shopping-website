@@ -13,6 +13,14 @@ export default {
             method: 'GET'
         })
     },
+    //获取搜索页数据
+    reqSearchList(params) {
+        return requests({
+            url: '/list',
+            method: 'post',
+            data:params
+        })
+    },
     //获取首页轮播图数据的接口
     reqBannerList() {
         return mockRequests({
