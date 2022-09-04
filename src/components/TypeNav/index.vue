@@ -14,7 +14,7 @@
               <!-- li循环列表 -->
               <li
                 class="item"
-                v-for="(c1, index) in categoryList.slice(0, 14)"
+                v-for="(c1, index) in categoryList.data"
                 :key="c1.categoryId"
               >
                 <h3
@@ -99,9 +99,7 @@ export default {
   //生命周期 - 创建完成（访问当前this实例）
   created() {},
   computed: {
-    ...mapState({
-      categoryList: (state) => state.home.categoryList,
-    }),
+    ...mapState('home',['categoryList']),
   },
   methods: {
     changeIndex: throttle(function (index) {

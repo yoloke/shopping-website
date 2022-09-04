@@ -7,7 +7,7 @@
       <div class="right">
         <div class="news">
           <h4>
-            <em class="fl">尚品汇快报</em>
+            <em class="fl">掌上豹资讯</em>
             <span class="fr tip">更多 ></span>
           </h4>
           <div class="clearix"></div>

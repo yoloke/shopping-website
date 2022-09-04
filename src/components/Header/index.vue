@@ -7,7 +7,7 @@
       <!-- logo模块 -->
       <div class="logo">
         <h1>
-          <a href="http://localhost:8001/#/home" title="掌上豹">掌上豹</a>
+          <a href="http://localhost:8000/#/home" title="掌上豹">掌上豹</a>
         </h1>
       </div>
       <div class="search_hotwords">

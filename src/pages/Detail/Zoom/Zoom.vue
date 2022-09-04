@@ -1,22 +1,35 @@
 <template>
-  <div class="spec-preview">
-    <img src="../images/s1.png" />
-    <div class="event"></div>
-    <div class="big">
-      <img src="../images/s1.png" />
-    </div>
+  <div class="preview_img" >
+    <!-- 正常的图片 -->
+    <img :src="skuImageList[0].imgUrl" />
+    <!-- 遮挡层 -->
     <div class="mask"></div>
+    <!-- <div class="event"></div> -->
+    <!-- 放大的图片 -->
+    <div class="big">
+      <img :src="skuImageList[0].imgUrl" />
+    </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "Zoom",
+  name: "Zoom",
+  props: {
+    skuImageList: {
+      default() {
+          return [{}]
+        }
+      }
+  },
+    methods: {
+     
+    },
   }
 </script>
 
 <style lang="less">
-  .spec-preview {
+  .preview_img {
     position: relative;
     width: 400px;
     height: 400px;
@@ -34,6 +47,8 @@
       top: 0;
       left: 0;
       z-index: 998;
+      cursor: pointer;
+      background-color: pink;
     }
 
     .mask {
@@ -47,14 +62,14 @@
     }
 
     .big {
-      width: 100%;
-      height: 100%;
+      width: 400px;
+      height:400px;
       position: absolute;
       top: -1px;
       left: 100%;
       border: 1px solid #aaa;
       overflow: hidden;
-      z-index: 998;
+      z-index: 998;//提高层级
       display: none;
       background: white;
 
@@ -68,8 +83,8 @@
       }
     }
 
-    .event:hover~.mask,
-    .event:hover~.big {
+    &:hover .mask,
+    &:hover .big {
       display: block;
     }
   }

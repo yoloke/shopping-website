@@ -35,7 +35,7 @@ export default [
         component: Register
     },
     {
-        path: "/detail/:id",
+        path: "/detail/:skuId",
         component: Detail,
         meta: {
             show: true

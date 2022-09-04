@@ -1,0 +1,128 @@
+{
+    "code": 200,
+    "message": "成功",
+    "data": {
+        "valuesSkuJson": "{\"3\":3,\"4\":2}",
+        "price": 6999,
+        "categoryView": {
+            "id": 61,
+            "category1Id": 2,
+            "category1Name": "手机",
+            "category2Id": 13,
+            "category2Name": "手机通讯",
+            "category3Id": 61,
+            "category3Name": "手机"
+        },
+        "spuSaleAttrList": [],
+        "skuInfo": {
+            "id": 2,
+            "spuId": 1,
+            "price": 6999,
+            "skuName": "小米10 至尊纪念版 双模5G 骁龙865 120HZ高刷新率 120倍长焦镜头 120W快充 12GB+256GB 陶瓷黑 游戏手机",
+            "skuDesc": "小米10 至尊纪念版 双模5G 骁龙865 120HZ高刷新率 120倍长焦镜头 120W快充 12GB+256GB 陶瓷黑 游戏手机",
+            "weight": "1.00",
+            "tmId": 1,
+            "category3Id": 61,
+            "skuDefaultImg": "http://47.93.148.192:8080/group1/M00/00/01/rBHu8l-rfvmAcbl2AAFopp2WGBQ404.jpg",
+            "isSale": 1,
+            "createTime": "2021-12-10 09:31:42",
+            "skuImageList": [
+                {
+                    "id": 7,
+                    "skuId": 2,
+                    "imgName": "ead186426badb626.jpg",
+                    "imgUrl": "http://47.93.148.192:8080/group1/M00/00/01/rBHu8l-rfvmAHpFuAACTenfIJWo734.jpg",
+                    "spuImgId": 2,
+                    "isDefault": "0"
+                },
+                {
+                    "id": 8,
+                    "skuId": 2,
+                    "imgName": "b58ab2d79b859f39.jpg",
+                    "imgUrl": "http://47.93.148.192:8080/group1/M00/00/01/rBHu8l-rfvmAcbl2AAFopp2WGBQ404.jpg",
+                    "spuImgId": 3,
+                    "isDefault": "1"
+                },
+                {
+                    "id": 9,
+                    "skuId": 2,
+                    "imgName": "0d93a071c839d890.jpg",
+                    "imgUrl": "http://47.93.148.192:8080/group1/M00/00/01/rBHu8l-rfvmATs5EAABriLbF9vE207.jpg",
+                    "spuImgId": 4,
+                    "isDefault": "0"
+                },
+                {
+                    "id": 10,
+                    "skuId": 2,
+                    "imgName": "a7b1125239354d0d.jpg",
+                    "imgUrl": "http://47.93.148.192:8080/group1/M00/00/01/rBHu8l-rfvmAeWopAAEtpBjP1VQ788.jpg",
+                    "spuImgId": 5,
+                    "isDefault": "0"
+                },
+                {
+                    "id": 11,
+                    "skuId": 2,
+                    "imgName": "6029cb2c2b2c7668.jpg",
+                    "imgUrl": "http://47.93.148.192:8080/group1/M00/00/01/rBHu8l-rfvmAZJX2AAGmVo8Tz9s683.jpg",
+                    "spuImgId": 6,
+                    "isDefault": "0"
+                }
+            ],
+            "skuAttrValueList": [
+                {
+                    "id": 5,
+                    "attrId": 106,
+                    "valueId": 176,
+                    "skuId": 2,
+                    "attrName": "手机一级",
+                    "valueName": "安卓手机"
+                },
+                {
+                    "id": 6,
+                    "attrId": 107,
+                    "valueId": 177,
+                    "skuId": 2,
+                    "attrName": "二级手机",
+                    "valueName": "小米"
+                },
+                {
+                    "id": 7,
+                    "attrId": 23,
+                    "valueId": 83,
+                    "skuId": 2,
+                    "attrName": "运行内存",
+                    "valueName": "8G"
+                },
+                {
+                    "id": 8,
+                    "attrId": 24,
+                    "valueId": 166,
+                    "skuId": 2,
+                    "attrName": "机身内存",
+                    "valueName": "256G"
+                }
+            ],
+            "skuSaleAttrValueList": [
+                {
+                    "id": 3,
+                    "skuId": 2,
+                    "spuId": 1,
+                    "saleAttrValueId": 1,
+                    "saleAttrId": 1,
+                    "saleAttrName": "颜色",
+                    "saleAttrValueName": "陶瓷黑"
+                },
+                {
+                    "id": 4,
+                    "skuId": 2,
+                    "spuId": 1,
+                    "saleAttrValueId": 4,
+                    "saleAttrId": 2,
+                    "saleAttrName": "版本",
+                    "saleAttrValueName": "16G+256G"
+                }
+            ]
+        }
+    },
+    "ok": true
+}

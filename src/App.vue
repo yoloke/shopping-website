@@ -20,7 +20,7 @@ export default {
   },
  mounted() {
     //通知vuex发请求，获取数据，存储在仓库种
-    this.$store.dispatch("home/categoryList");
+   this.$store.dispatch("home/categoryList");
   },
 }
 </script>

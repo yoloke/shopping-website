@@ -21,19 +21,20 @@ requests.interceptors.request.use(config => {
     //开启进度条
     nprogress.start();
     return config;
+}, err => {
+    return Promise.reject(err);
 })
 
-//3、配置相应拦截器
+//3、配置响应拦截器
 requests.interceptors.response.use((res) => {
     //成功的回调函数
     //响应成功，关闭进度条
     nprogress.done()
-
     return res.data;
 }, (error) => {
     //失败的回调函数
     console.log("响应失败" + error)
-    return Promise.reject(new Error('fail'))
+    return Promise.reject(error.response)
 })
 
 //4、对外暴露

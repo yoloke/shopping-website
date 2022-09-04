@@ -15,6 +15,7 @@ Vue.component(TypeNav.name, TypeNav)
 import Pagination from '@/components/Pagination';
 Vue.component(Pagination.name, Pagination)
 
+
 //引入路由
 import router from "@/router"
 

@@ -6,7 +6,7 @@ module.exports = defineConfig({
   devServer: {
     host: 'localhost',
     // development server port 8000
-    port: 8001,
+    port: 8000,
     //代理服务器解决跨域
     proxy: {
       //会把请求路径中的/api换为后面的代理服务器
