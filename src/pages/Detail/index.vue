@@ -749,6 +749,7 @@ export default {
             }
 
             p {
+              
               color: #c81623;
               font-size: 16px;
               font-weight: 700;
