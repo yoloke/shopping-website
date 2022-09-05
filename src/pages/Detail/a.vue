@@ -2,11 +2,11 @@
   <div class="detail">
     <!-- 商品分类导航 -->
     <TypeNav />
+
     <!-- 主要内容区域 -->
     <section class="con">
-      <!-- 导航路径区域 -->
+      <!-- 导航路径区域:面包屑 -->
       <div class="conPoin">
-        <!-- 导航路径区域:面包屑 -->
         <!-- 程序的警告:categoryView是undefined,它是vuex给的 -->
         <span>{{ categoryView.category1Name }}</span>
         <span>{{ categoryView.category2Name }}</span>
@@ -19,7 +19,7 @@
           <!--放大镜效果-->
           <Zoom />
           <!-- 小图列表 -->
-          <ImageList :skuImageList="skuImageList" />
+          <ImageList />
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
@@ -38,11 +38,12 @@
                 <div class="price">
                   <i>¥</i>
                   <em>{{ skuInfo.price }}</em>
-                  <span @click="notice"> 降价通知 </span>
+                  <span>降价通知</span>
                 </div>
                 <div class="remark">
                   <i>累计评价</i>
-                  <em>65545</em>
+                  <!--代表的是某一个数字的多少幂-->
+                  <em>{{ skuInfo.id ** 2 }}</em>
                 </div>
               </div>
               <div class="priceArea2">
@@ -51,9 +52,7 @@
                 </div>
                 <div class="fixWidth">
                   <i class="red-bg">加价购</i>
-                  <em class="t-gray">
-                    满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em
-                  >
+                  <em class="t-gray">{{ skuInfo.createTime }}</em>
                 </div>
               </div>
             </div>
@@ -72,13 +71,13 @@
               </div>
             </div>
           </div>
-          <!-- 售卖属性 -->
+
           <div class="choose">
             <div class="chooseArea">
               <div class="choosed"></div>
               <!--这里是商品销售属性的地方-->
               <dl
-                v-for="(saleAttr) in spuSaleAttrList"
+                v-for="(saleAttr, index) in spuSaleAttrList"
                 :key="saleAttr.id"
               >
                 <dt class="title">{{ saleAttr.saleAttrName }}</dt>
@@ -86,7 +85,9 @@
                 <dd
                   changepirce="0"
                   :class="{ active: saleAttrValue.isChecked == 1 }"
-                  v-for="( saleAttrValue) in saleAttr.spuSaleAttrValueList"
+                  v-for="(
+                    saleAttrValue, index
+                  ) in saleAttr.spuSaleAttrValueList"
                   :key="saleAttrValue.id"
                   @click="
                     changeChecked(saleAttrValue, saleAttr.spuSaleAttrValueList)
@@ -95,28 +96,35 @@
                   {{ saleAttrValue.saleAttrValueName }}
                 </dd>
               </dl>
-              <dl>
-                <dt class="title">购买方式</dt>
-                <dd changepirce="0" class="active">官方标配</dd>
-                <dd changepirce="-240">优惠移动版</dd>
-                <dd changepirce="-390">电信优惠版</dd>
-              </dl>
             </div>
             <div class="cartWrap">
+              <!-- 购物商品个数的操作地方 -->
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input
+                  autocomplete="off"
+                  class="itxt"
+                  v-model="skuNum"
+                  @change="handler"
+                />
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a
+                  href="javascript:"
+                  class="mins"
+                  @click="skuNum > 1 ? skuNum-- : 1"
+                  >-</a
+                >
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <!--点击加入购物车按钮:不能用声明式导航,第一个：要发请求（有业务）-->
+                <a @click="addOrUpdateCart">加入购物车</a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-<!-- 内容详情页 -->
+
+    <!-- 内容详情页 -->
     <section class="product-detail">
       <aside class="aside">
         <div class="tabWraped">
@@ -347,49 +355,87 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import ImageList from "./ImageList/ImageList";
 import Zoom from "./Zoom/Zoom";
+//通过辅助函数获取数据
+import { mapGetters } from "vuex";
 export default {
   name: "Detail",
+  data() {
+    return {
+      //控制商品购买个数
+      skuNum: 1,
+    };
+  },
   components: {
     ImageList,
     Zoom,
   },
-  data() {
-    return {
-      bannerList: {},
-    };
+  mounted() {
+    //派发action:详情模块发请求需要携带商品的id
+    this.$store.dispatch("getDetailInfo", this.$route.params.skuId);
+    console.log("我是详情页的mounted,发请求获取详情的数据");
   },
   computed: {
-    ...mapGetters("detail", ["categoryView", "skuInfo", "spuSaleAttrList"]),
-    //给放大镜传数据
-    skuImageList() {
-      return this.skuInfo.skuImageList;
-    },
-  },
-  mounted() {
-    this.$store.dispatch("detail/getGoodInfo", this.$route.params.skuId);
+    ...mapGetters(["categoryView", "skuInfo", "spuSaleAttrList"]),
   },
   methods: {
-    notice() {
-      alert("已开启降价通知");
-    },
     changeChecked(saleAttrValue, arr) {
+      console.log(this.skuInfo);
+      //响应式数据:对象、数组
+      //数组的响应式数据:变更、替换【基本类型数据、引用类型对象响应式的】
+      //数组里面是基本类型数据：替换、变更    如果对象，不管你怎么玩都是相应的!!!!
       //排他操作
       //底下的代码:修改数组里面的对象【相应的式的】,数据变化视图跟这变化！！！
       arr.forEach((item) => {
         item.isChecked = "0";
       });
       saleAttrValue.isChecked = "1";
-    
-    }
+    },
+    //数量的表单元素的change回调
+    handler(e) {
+      //通过event事件对象获取用户输入内容[用户输入的内容一定是字符串类型的数据]
+      let value = e.target.value * 1;
+      //用户输入进来非法情况判断
+      if (isNaN(value) || value < 1) {
+        this.skuNum = 1;
+      } else {
+        //正常情况
+        this.skuNum = parseInt(value);
+      }
+    },
+    //加入购物车按钮
+    async addOrUpdateCart() {
+      //派发action:携带的载荷，分别商品的id、商品个数
+      //思考底下的这行代码实质做了一个什么事情?
+      //实质就是调用了小仓库里面相应的这个函数->addOrUpdateCart,声明部分加上asyc,这个函数执行的结构一定是Promise
+      //返回结果是一个Promise对象【三种状态:pending、成功、失败】，返回状态到底是什么，取决于这个函数addOrUpdateCart返回结果
+      try {
+        //成功干什么
+        await this.$store.dispatch("addOrUpdateCart", {
+          skuId: this.$route.params.skuId,
+          skuNum: this.skuNum,
+        });
+        //路由跳转:携带参数,携带参数一般都是基本类型数据【字符串、数字等等】，引用类型数据白扯【传递过来路由获取不到】！！！
+        //浏览器存储功能，在路由跳转在之前，存储到浏览器中
+        sessionStorage.setItem('SKUINFO',JSON.stringify(this.skuInfo));
+        //路由跳转
+        this.$router.push({
+          path: "/addcartsuccess",
+          query: { skuNum: this.skuNum},
+        });
+      } catch (error) {
+        //失败干什么
+        alert("加入购物车失败");
+      }
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
 .detail {
+  
   .con {
     width: 1200px;
     margin: 15px auto 0;
@@ -523,23 +569,12 @@ export default {
             margin-top: 10px;
 
             dl {
-              text-align: justify;
-              text-justify: inter-ideograph;
               overflow: hidden;
               margin: 13px 0;
 
               dt {
-                text-align: justify;
-                text-justify: inter-ideograph;
-                width: 48px;
                 margin-right: 15px;
                 float: left;
-                color: #999;
-
-                i {
-                  display: inline-block;
-                  width: 100%;
-                }
               }
 
               dd {
@@ -630,7 +665,7 @@ export default {
       width: 210px;
       float: left;
       border: 1px solid #ccc;
-      box-sizing: content-box;
+       box-sizing: content-box;
 
       .tabWraped {
         height: 40px;
@@ -717,14 +752,12 @@ export default {
     .detail {
       width: 980px;
       float: right;
-      
+
       .fitting {
-        box-sizing: content-box;
         border: 1px solid #ddd;
         margin-bottom: 15px;
 
         .kt {
-          box-sizing: content-box;
           border-bottom: 1px solid #ddd;
           background: #f1f1f1;
           color: #333;
@@ -732,12 +765,10 @@ export default {
         }
 
         .good-suits {
-          box-sizing: content-box;
           height: 170px;
           padding-top: 10px;
 
           .master {
-            box-sizing: content-box;
             width: 127px;
             height: 165px;
             text-align: center;
@@ -835,15 +866,18 @@ export default {
       }
 
       .intro {
-        box-sizing: content-box;
         .tab-wraped {
-          background-color: #f7f7f7;
+          background: #ededed;
           // border: 1px solid #ddd;
           overflow: hidden;
-          border-bottom: 1px solid #e1251b;
 
           li {
             float: left;
+
+            & + li > a {
+              border-left: 1px solid #ddd;
+            }
+
             &.active {
               a {
                 // border: 0;
@@ -854,12 +888,14 @@ export default {
 
             a {
               display: block;
-              height: 41px;
-              line-height: 41px;
-              padding: 0 25px;
+              height: 40px;
+              line-height: 40px;
+              padding: 0 11px;
               text-align: center;
               color: #666;
-              background: #f7f7f7;
+              background: #fcfcfc;
+              border-top: 1px solid #ddd;
+              border-bottom: 1px solid #ddd;
             }
           }
         }
