@@ -76,19 +76,23 @@
           <div class="choose">
             <div class="chooseArea">
               <div class="choosed"></div>
-              <dl v-for="item in spuSaleAttrList" :key="item.id">
-                <dt class="title">
-                  {{ item.saleAttrName }}
-                  <i></i>
-                </dt>
+              <!--这里是商品销售属性的地方-->
+              <dl
+                v-for="(saleAttr) in spuSaleAttrList"
+                :key="saleAttr.id"
+              >
+                <dt class="title">{{ saleAttr.saleAttrName }}</dt>
+                <!--每一个销售属性的属性值的地方-->
                 <dd
                   changepirce="0"
-                  :class="{ active: a.isChecked == 1 }"
-                  v-for="a in item.spuSaleAttrValueList"
-                  :key="a.id"
-                  @click="changeChecked(a.isChecked)"
+                  :class="{ active: saleAttrValue.isChecked == 1 }"
+                  v-for="( saleAttrValue) in saleAttr.spuSaleAttrValueList"
+                  :key="saleAttrValue.id"
+                  @click="
+                    changeChecked(saleAttrValue, saleAttr.spuSaleAttrValueList)
+                  "
                 >
-                  {{ a.saleAttrValueName }}
+                  {{ saleAttrValue.saleAttrValueName }}
                 </dd>
               </dl>
               <dl>
@@ -371,8 +375,14 @@ export default {
     notice() {
       alert("已开启降价通知");
     },
-    changeChecked(a) {
-      console.log(a);
+    changeChecked(saleAttrValue, arr) {
+      //排他操作
+      //底下的代码:修改数组里面的对象【相应的式的】,数据变化视图跟这变化！！！
+      arr.forEach((item) => {
+        item.isChecked = "0";
+      });
+      saleAttrValue.isChecked = "1";
+    
     }
   },
 };
