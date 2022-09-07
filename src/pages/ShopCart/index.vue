@@ -144,6 +144,7 @@
 </template>
 
 <script>
+import throttle from "lodash/throttle";
 import { mapGetters } from "vuex";
 export default {
   name: "shopCart",
@@ -194,8 +195,8 @@ export default {
         this.getData();
       } catch (error) {}
     },
-    //修改产品个数 节流
-    async hander(type, disNum, item) {
+    //修改产品个数 节流 一秒内只能点击一次
+     hander:throttle(async function(type, disNum, item) {
       switch (type) {
         //加号
         case "add":
@@ -214,7 +215,6 @@ export default {
           // disNum = (isNaN(disNum) || disNum < 1)?0:parseInt(disNum) - item.skuNum
           break;
       }
-      console.log(disNum);
       try {
         //派发action
         await this.$store.dispatch("detail/addOrUpdateCart", {
@@ -224,7 +224,7 @@ export default {
         //再一次获取数据
         this.getData();
       } catch (error) {}
-    },
+    },1000),
     //删除某个产品
     async deleteCartById(skuId) {
       try {
