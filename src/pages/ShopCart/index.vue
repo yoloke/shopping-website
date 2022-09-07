@@ -56,7 +56,7 @@
           <li class="cart-list-con7">
             <a class="sindelet" @click="deleteCartById(item.skuId)">删除</a>
             <br />
-            <a >移到收藏</a>
+            <a>移到收藏</a>
           </li>
         </ul>
 
@@ -125,9 +125,9 @@
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
-        <a href="#none">移到我的关注</a>
-        <a href="#none">清除下架商品</a>
+        <a @click="deleteAllCart">删除选中的商品</a>
+        <a>移到我的关注</a>
+        <a>清除下架商品</a>
       </div>
       <div class="money-box">
         <div class="chosed">已选择 <span>0</span>件商品</div>
@@ -196,7 +196,7 @@ export default {
       } catch (error) {}
     },
     //修改产品个数 节流 一秒内只能点击一次
-     hander:throttle(async function(type, disNum, item) {
+    hander: throttle(async function (type, disNum, item) {
       switch (type) {
         //加号
         case "add":
@@ -224,7 +224,7 @@ export default {
         //再一次获取数据
         this.getData();
       } catch (error) {}
-    },1000),
+    }, 1000),
     //删除某个产品
     async deleteCartById(skuId) {
       try {
@@ -235,7 +235,18 @@ export default {
       } catch (error) {
         alert("删除失败");
       }
-    }
+    },
+    //删除选中的商品
+    async deleteAllCart() {
+      try {
+        //等待全部勾选商品删除以后
+        await this.$store.dispatch("shopcart/deleteAllCart");
+        //再次获取购物车的数据
+        this.getData();
+      } catch (error) {
+        alert("删除失败");
+      }
+    },
   },
 };
 </script>
@@ -383,9 +394,9 @@ export default {
 
           a {
             color: #666;
-            &:hover{
+            &:hover {
               cursor: pointer;
-              color:  #ff6700;
+              color: #ff6700;
             }
           }
         }
@@ -423,6 +434,10 @@ export default {
         float: left;
         padding: 0 10px;
         color: #666;
+        &:hover {
+          cursor: pointer;
+          color: #ff6700;
+        }
       }
     }
 

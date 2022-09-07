@@ -99,7 +99,7 @@
                   </div>
                   <div class="operate">
                     <router-link
-                      to="/detail"
+                      :to="`/detail/${item.id}`"
                       class="sui-btn btn-bordered btn-danger"
                       >加入购物车</router-link
                     >
