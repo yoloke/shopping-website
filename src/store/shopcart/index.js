@@ -15,20 +15,19 @@ let actions = {
                commit('GETSHOPCART', result.data);
           }
      },
-     // //删除某一个商品的数据
-     // async deleteCartById({ commit, state, dispatch }, skuId) {
-     //      let result = await reqDeleteCart(skuId);
-     //      if (result.code == 200) {
-     //           return 'ok';
-     //      } else {
-     //           return Promise.reject();
-     //      }
-     // },
      //修改某一个商品勾选状态
      async changeChecked({ }, { skuId, isChecked }) {
-          console.log("ttttttttttttttt");
           let result = await api.reqUpdateChecked(skuId, isChecked);
           console.log(result);
+          if (result.code == 200) {
+               return 'ok';
+          } else {
+               return Promise.reject();
+          }
+     },
+     //删除某一个商品的数据
+     async deleteCartById({dispatch }, skuId) {
+          let result = await api.reqDeleteCartById(skuId);
           if (result.code == 200) {
                return 'ok';
           } else {
@@ -49,8 +48,8 @@ let actions = {
      //      //成功、还是失败取决于数组里面的promise状态:四个都成功、返回成功Promise、只要有一个失败、返回Promise失败状态！！！
      //      return Promise.all(arr);
      // },
-     // //删除选中的商品
-     // deleteAllCart({ commit, state, dispatch }) {
+     //删除选中的商品
+     // deleteCart({ commit, state, dispatch}) {
      //      let arr = [];
      //      //获取仓库里面购物车的数据
      //      state.shopCartInfo[0].cartInfoList.forEach(item => {

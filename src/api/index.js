@@ -45,7 +45,12 @@ export default {
             method: 'get'
         })
     },
-
+    reqDeleteCartById(skuId) {
+        return requests({
+            url: `/cart/deleteCart/${skuId}`,
+            method: 'delete'
+        });
+    },
     //获取分级列表数据
     reqCateGoryList() {
         return mockRequests({

@@ -54,9 +54,9 @@
             <span class="sum">{{ item.skuPrice * item.skuNum }}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a class="sindelet" @click="deleteCartById(item.skuId)">删除</a>
             <br />
-            <a href="#none">移到收藏</a>
+            <a >移到收藏</a>
           </li>
         </ul>
 
@@ -194,7 +194,7 @@ export default {
         this.getData();
       } catch (error) {}
     },
-    //修改产品个数
+    //修改产品个数 节流
     async hander(type, disNum, item) {
       switch (type) {
         //加号
@@ -211,6 +211,7 @@ export default {
           } else {
             disNum = parseInt(disNum) - item.skuNum;
           }
+          // disNum = (isNaN(disNum) || disNum < 1)?0:parseInt(disNum) - item.skuNum
           break;
       }
       console.log(disNum);
@@ -224,6 +225,17 @@ export default {
         this.getData();
       } catch (error) {}
     },
+    //删除某个产品
+    async deleteCartById(skuId) {
+      try {
+        //删除商品成功
+        await this.$store.dispatch("shopcart/deleteCartById", skuId);
+        //再次获取购物车最新的数据
+        this.getData();
+      } catch (error) {
+        alert("删除失败");
+      }
+    }
   },
 };
 </script>
@@ -371,6 +383,10 @@ export default {
 
           a {
             color: #666;
+            &:hover{
+              cursor: pointer;
+              color:  #ff6700;
+            }
           }
         }
       }
