@@ -9,7 +9,7 @@
         <img
           :src="slide.imgUrl"
           :class="{ active: currentIndex == index }"
-          @click="handler(index)"
+          @mouseenter="handler(index)"
         />
       </div>
     </div>
@@ -67,6 +67,7 @@ export default {
     },
     add() {
       this.currentIndex++;
+      console.log(this.currentIndex++)
       if (this.currentIndex >= this.skuInfo.skuImageList.length - 1) {
         this.currentIndex = this.skuInfo.skuImageList.length - 1;
       }

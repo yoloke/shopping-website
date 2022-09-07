@@ -1,6 +1,6 @@
 //对axios二次封装
 import axios from "axios";
-
+import store from '@/store';
 //引入进度条
 import nprogress from 'nprogress';
 //引入进度条样式
@@ -18,6 +18,13 @@ const requests = axios.create({
 requests.interceptors.request.use(config => {
     //config内主要是对请求头Header配置
     //比如添加token
+
+    //1、先判断uuid_token是否为空
+    if (store.state.detail.uuid_token) {
+        //2、userTempId字段和后端统一
+        console.log(store.state.detail.uuid_token);
+        config.headers['userTempId'] = store.state.detail.uuid_token
+    }
     //开启进度条
     nprogress.start();
     return config;

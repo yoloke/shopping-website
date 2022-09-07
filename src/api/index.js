@@ -1,9 +1,10 @@
 
 //当前模块，API进行统一管理，即对请求接口统一管理
-
 import requests from "@/api/request";
 //mockde
 import mockRequests from "./mockAjax";
+
+
 
 //对外暴露函数
 export default {
@@ -22,13 +23,30 @@ export default {
             method: 'get',
         });
     },
+    //商品详情页加入购物车/对已有商品数量的修改
+    reqAddOrUpdateShopCart(skuId, skuNum) {
+        return requests({
+            url: `/cart/addToCart/${skuId}/${skuNum}`,
+            method: 'post'
+        })
+    },
+
+    //获取用户购物车的数据接口
+    reqShopCart() {
+        return requests({
+            url: '/cart/cartList',
+            method: 'get'
+        })
+    },
+    //修改某一个商品的勾选的状态
+    reqUpdateChecked(skuId, isChecked) {
+        return requests({
+            url: `/cart/checkCart/${skuId}/${isChecked}`,
+            method: 'get'
+        })
+    },
+
     //获取分级列表数据
-    // reqCateGoryList() {
-    //     return mockRequests({
-    //         url: '/product/getBaseCategoryList',
-    //         method: 'GET'
-    //     })
-    // },
     reqCateGoryList() {
         return mockRequests({
             url: '/typenav',

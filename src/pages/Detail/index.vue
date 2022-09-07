@@ -88,9 +88,7 @@
                   :class="{ active: saleAttrValue.isChecked == 1 }"
                   v-for="( saleAttrValue) in saleAttr.spuSaleAttrValueList"
                   :key="saleAttrValue.id"
-                  @click="
-                    changeChecked(saleAttrValue, saleAttr.spuSaleAttrValueList)
-                  "
+                  @click="changeChecked(saleAttrValue, saleAttr.spuSaleAttrValueList)"
                 >
                   {{ saleAttrValue.saleAttrValueName }}
                 </dd>
@@ -102,14 +100,16 @@
                 <dd changepirce="-390">电信优惠版</dd>
               </dl>
             </div>
+            <!-- 加入购物车模块 -->
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model.number="skuNum" @change="handler"/>
+                <a class="plus" @click="skuNum++">+</a>
+                <a class="mins" @click="skuNum > 1 ? skuNum-- : 1">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <!--点击加入购物车按钮:不能用声明式导航,第一个：要发请求（有业务）-->
+                <a @click="addOrUpdateCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -359,6 +359,8 @@ export default {
   data() {
     return {
       bannerList: {},
+      //控制商品购买个数
+      skuNum: 1,
     };
   },
   computed: {
@@ -372,19 +374,68 @@ export default {
     this.$store.dispatch("detail/getGoodInfo", this.$route.params.skuId);
   },
   methods: {
+    //开启降价通知
     notice() {
       alert("已开启降价通知");
     },
+    //切换商品属性
     changeChecked(saleAttrValue, arr) {
       //排他操作
       //底下的代码:修改数组里面的对象【相应的式的】,数据变化视图跟这变化！！！
+      console.log("ssssssssss");
       arr.forEach((item) => {
         item.isChecked = "0";
       });
       saleAttrValue.isChecked = "1";
-    
-    }
-  },
+    },
+    //修改商品数量
+    handler(e) {
+      //通过event事件对象获取用户输入内容[用户输入的内容一定是字符串类型的数据]
+      let value = e.target.value * 1;
+      //用户输入进来非法情况判断
+      if (isNaN(value) || value < 1) {
+        this.skuNum = 1;
+      } else {
+        //正常情况
+        //防止出现小数
+        this.skuNum = parseInt(value);
+      }
+    },
+    //点击加入购物车按钮
+    // addOrUpdateCart() {
+    //   this.$store.dispatch("detail/addOrUpdateCart", {
+    //     skuId: this.$route.params.skuId,
+    //     skuNum: this.skuNum
+    //   })
+    // },
+     //加入购物车按钮
+    async addOrUpdateCart() {
+      //派发action:携带的载荷，分别商品的id、商品个数
+      //思考底下的这行代码实质做了一个什么事情?
+      //实质就是调用了小仓库里面相应的这个函数->addOrUpdateCart,声明部分加上asyc,这个函数执行的结构一定是Promise
+      //返回结果是一个Promise对象【三种状态:pending、成功、失败】，返回状态到底是什么，取决于这个函数addOrUpdateCart返回结果
+      try {
+        //成功干什么
+        await this.$store.dispatch("detail/addOrUpdateCart", {
+          skuId: this.$route.params.skuId,
+          skuNum: this.skuNum,
+        });
+        //路由跳转:携带参数,携带参数一般都是基本类型数据【字符串、数字等等】，引用类型数据白扯【传递过来路由获取不到】！！！
+        //浏览器存储功能，在路由跳转在之前，存储到浏览器中
+        //通过会话存储
+        sessionStorage.setItem('SKUINFO', JSON.stringify(this.skuInfo));
+        sessionStorage.setItem('SPUSALEATTRLIST', JSON.stringify(this.spuSaleAttrList));
+        //路由跳转
+        this.$router.push({
+          path: "/addcartsuccess",
+          query: { skuNum: this.skuNum},
+        });
+      } catch (error) {
+        //失败干什么
+        alert("加入购物车失败");
+      }
+    },
+  }
 };
 </script>
 
@@ -563,6 +614,7 @@ export default {
 
           .cartWrap {
             .controls {
+              cursor: pointer;
               width: 48px;
               position: relative;
               float: left;
@@ -749,7 +801,7 @@ export default {
             }
 
             p {
-              
+
               color: #c81623;
               font-size: 16px;
               font-weight: 700;
@@ -771,7 +823,7 @@ export default {
             .suitsItem {
               float: left;
               width: 127px;
-              padding: 0 20px;
+              margin: 0 20px;
               text-align: center;
 
               img {
@@ -868,7 +920,6 @@ export default {
         .tab-content {
           .tab-pane {
             display: none;
-
             &.active {
               display: block;
             }
@@ -878,7 +929,9 @@ export default {
                 padding-left: 10px;
 
                 li {
-                  margin: 10px 0;
+                  margin: 10px 20px;
+                  width: 280px;
+                  float: left;
                 }
               }
 

@@ -1,7 +1,6 @@
 <!--  -->
 <template>
   <div>
-    <Shortcut></Shortcut>
     <!-- header头部模块制作 start -->
     <header class="header">
       <!-- logo模块 -->
@@ -28,7 +27,7 @@
         </div>
       </div>
       <!-- 购物车模块 -->
-      <div class="shopcar">
+      <div class="shopcar" @click="gotoShopCart">
         <span class="el-icon-shopping-cart-full"></span>
         我的购物车
         <span class="count">8</span>
@@ -39,7 +38,6 @@
 </template>
 
 <script>
-import Shortcut from "../Shortcut/index.vue";
 export default {
   data() {
     return {
@@ -60,6 +58,10 @@ export default {
       }
       this.$router.push(locations);
     },
+    //去购物车页面
+    gotoShopCart() {
+      this.$router.push('/shopCart')
+    }
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() { },
@@ -70,7 +72,6 @@ export default {
       this.keyword = ''
     })
   },
-  components: { Shortcut },
 };
 </script>
 <style scoped>
@@ -135,6 +136,7 @@ export default {
   text-align: center;
   border: 1px solid #dfdfdf;
   background-color: #f7f7f7;
+  cursor: pointer;
 }
 .el-icon-shopping-cart-full {
   margin-left: 5px;
