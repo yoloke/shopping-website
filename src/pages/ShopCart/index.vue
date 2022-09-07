@@ -4,7 +4,7 @@
     <div class="cart-main">
       <div class="cart-th">
         <div class="cart-th1">
-          <input type="checkbox" name="chk_list" :checked="isCartChecked" />
+          <input type="checkbox" name="chk_list" :checked="isCartChecked" @change="updateAllChecked" />
           全部
         </div>
         <div class="cart-th2">商品</div>
@@ -121,7 +121,7 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isCartChecked" />
+        <input class="chooseAll" type="checkbox" :checked="isCartChecked" @change="updateAllChecked" />
         <span>全选</span>
       </div>
       <div class="option">
@@ -194,6 +194,19 @@ export default {
         await this.$store.dispatch("shopcart/changeChecked", params);
         this.getData();
       } catch (error) {}
+    },
+    //全选的业务
+    async updateAllChecked(e) {
+      //获取全选的复选框勾选的状态,接口需要的1|0
+      let isChecked = e.target.checked ? "1" : "0";
+      console.log(isChecked);
+      try {
+        //await等待成功:购物车全部商品勾选状态成功以后
+        await this.$store.dispatch("shopcart/allUpdateChecked", isChecked);
+        this.getData();
+      } catch (error) {
+        alert("修改失败");
+      }
     },
     //修改产品个数 节流 一秒内只能点击一次
     hander: throttle(async function (type, disNum, item) {
