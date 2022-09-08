@@ -4,7 +4,12 @@
     <div class="cart-main">
       <div class="cart-th">
         <div class="cart-th1">
-          <input type="checkbox" name="chk_list" :checked="isCartChecked" @change="updateAllChecked" />
+          <input
+            type="checkbox"
+            name="chk_list"
+            :checked="isCartChecked && cartInfoList.length > 0"
+            @change="updateAllChecked"
+          />
           全部
         </div>
         <div class="cart-th2">商品</div>
@@ -121,7 +126,12 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isCartChecked" @change="updateAllChecked" />
+        <input
+          class="chooseAll"
+          type="checkbox"
+          :checked="isCartChecked"
+          @change="updateAllChecked"
+        />
         <span>全选</span>
       </div>
       <div class="option">
@@ -130,7 +140,9 @@
         <a>清除下架商品</a>
       </div>
       <div class="money-box">
-        <div class="chosed">已选择 <span>0</span>件商品</div>
+        <div class="chosed">
+          已选择 <span>{{ num }}</span> 件商品
+        </div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
           <i class="summoney">{{ totalPrice }}</i>
@@ -164,7 +176,9 @@ export default {
     totalPrice() {
       var sum = 0;
       this.cartInfoList.forEach((item) => {
-        sum += item.skuPrice * item.skuNum;
+        if (item.isChecked) {
+          sum += item.skuPrice * item.skuNum;
+        }
       });
       return sum;
     },
@@ -175,6 +189,16 @@ export default {
         this.cartInfoList.filter((item) => item.isChecked == "1").length ===
         this.cartInfoList.length
       );
+    },
+    //已选择的商品数量
+    num() {
+      var sum = 0;
+      this.cartInfoList.forEach((item) => {
+        if (item.isChecked == 1) {
+          sum += item.skuNum;
+        }
+      });
+      return sum;
     },
   },
   methods: {
@@ -302,10 +326,11 @@ export default {
       .cart-th2 {
         width: 28%;
       }
-
+      .cart-th5{
+        width: 16%;
+      }
       .cart-th3,
-      .cart-th4,
-      .cart-th5 {
+      .cart-th4 {
         width: 14.5%;
       }
     }

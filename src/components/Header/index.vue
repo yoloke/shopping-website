@@ -1,6 +1,7 @@
 <!--  -->
 <template>
   <div>
+    <Shortcut></Shortcut>
     <!-- header头部模块制作 start -->
     <header class="header">
       <!-- logo模块 -->
@@ -29,7 +30,7 @@
       <!-- 购物车模块 -->
       <div class="shopcar" @click="gotoShopCart">
         <span class="el-icon-shopping-cart-full"></span>
-        我的购物车
+        我的购物车 
         <span class="count">8</span>
         <span class="el-icon-arrow-right"></span>
       </div>
@@ -38,40 +39,43 @@
 </template>
 
 <script>
+import ShopCart from '@/pages/ShopCart/index.vue';
+import Shortcut from '../Shortcut/index.vue';
 export default {
-  data() {
-    return {
-      keyword:""
-    };
-  },
-  methods: {
-    gotoSearch() {
-      let locations = {
-        name: "search",
-        params: {
-          keyword: this.keyword
-        },
-      };
-      //确定路径当中有query参数
-      if (this.$route.query.categoryName) {
-        locations.query = this.$route.query;
-      }
-      this.$router.push(locations);
+    data() {
+        return {
+            keyword: ""
+        };
     },
-    //去购物车页面
-    gotoShopCart() {
-      this.$router.push('/shopCart')
-    }
-  },
-  //生命周期 - 创建完成（访问当前this实例）
-  created() { },
-  mounted() {
-    //  组件挂载时就监听clear事件，clear事件在search模块中定义
-    //  当删除关键字面包屑时，触发该事件，同时header的输入框绑定的keyword要删除
-    this.$bus.$on("clearKeyword",()=>{
-      this.keyword = ''
-    })
-  },
+    methods: {
+        gotoSearch() {
+            let locations = {
+                name: "search",
+                params: {
+                    keyword: this.keyword
+                },
+            };
+            //确定路径当中有query参数
+            if (this.$route.query.categoryName) {
+                locations.query = this.$route.query;
+            }
+            this.$router.push(locations);
+        },
+        //去购物车页面
+        gotoShopCart() {
+            this.$router.push("/shopCart");
+        }
+    },
+    //生命周期 - 创建完成（访问当前this实例）
+    created() { },
+    mounted() {
+        //  组件挂载时就监听clear事件，clear事件在search模块中定义
+        //  当删除关键字面包屑时，触发该事件，同时header的输入框绑定的keyword要删除
+        this.$bus.$on("clearKeyword", () => {
+            this.keyword = "";
+        });
+    },
+    components: { ShopCart, Shortcut }
 };
 </script>
 <style scoped>

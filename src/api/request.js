@@ -22,8 +22,11 @@ requests.interceptors.request.use(config => {
     //1、先判断uuid_token是否为空
     if (store.state.detail.uuid_token) {
         //2、userTempId字段和后端统一
-        console.log(store.state.detail.uuid_token);
         config.headers['userTempId'] = store.state.detail.uuid_token
+    }
+    if (store.state.user.token) {
+        //2、token字段和后端统一
+        config.headers['token'] = store.state.user.token
     }
     //开启进度条
     nprogress.start();

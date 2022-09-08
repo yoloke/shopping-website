@@ -71,7 +71,77 @@ export default {
             url: '/floor',
             method: 'get'
         })
-    }
+    },
+    //获取验证码
+    reqGetCode(phone) {
+        return requests({
+            url: `/user/passport/sendCode/${phone}`,
+            method: 'get'
+        });
+    },
+    //注册的接口
+    reqRegister(data) {
+        return requests({
+            url: `/user/passport/register`,
+            method: 'post', data
+        });
+    },
+    //登录的接口:请求体携带参数 phone&&password
+    reqUserLogin(data) {
+        return requests({
+            url: `/user/passport/login`,
+            method: 'post', data
+        })
+    },
+    //获取用户登录成功以后用户信息的接口
+    reqUserInfo() {
+        return requests({
+            url: `/user/passport/auth/getUserInfo`,
+            method: 'get'
+        });
+    },
+
+
+    //退出登录业务
+    reqUserLogout() {
+        return requests({
+            url: `/user/passport/logout`,
+            method: 'get'
+        });
+    },
+
+
+
+    //获取用户地址信息
+    reqAddressInfo() {
+        return requests({
+            url: `/user/userAddress/auth/findUserAddressList`,
+            method: 'get'
+        });
+    },
+
+
+    //获取商品清单数据
+    ereqShopInfo() {
+        return requests({
+            url: `/order/auth/trade`,
+            method: 'get'
+        })
+    },
+
+    // //提交订单接口
+    // reqSubmitOrder = (tradeNo, data) => requests({ url: `/order/auth/submitOrder?tradeNo=${tradeNo}`, method: 'post', data });
+
+    // //获取支付信息接口
+    // reqPayInfo = (orderId) => requests({ url: `/payment/weixin/createNative/${orderId}`, method: 'get' });
+
+    // //查询支付结果
+    // reqPayResult = (orderId) => requests({ url: `/payment/weixin/queryPayStatus/${orderId}`, method: 'get' });
+
+
+    // //获取我的订单
+    // reqMyOrderList = (page, limit) => requests({ url: `/order/auth/${page}/${limit}`, method: 'get' });
+
 
 }
 
