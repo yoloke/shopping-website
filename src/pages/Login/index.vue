@@ -71,8 +71,9 @@
     data() {
     return {
       //收集账号与密码
-      phone: "15362304491",
-      password: "1234",
+      // phone: "15362304490",
+      phone: "13700000000",
+      password: "111111",
     };
   },
   methods: {

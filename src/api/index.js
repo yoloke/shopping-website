@@ -122,15 +122,19 @@ export default {
 
 
     //获取商品清单数据
-    ereqShopInfo() {
+    reqShopInfo() {
         return requests({
             url: `/order/auth/trade`,
             method: 'get'
         })
     },
-
-    // //提交订单接口
-    // reqSubmitOrder = (tradeNo, data) => requests({ url: `/order/auth/submitOrder?tradeNo=${tradeNo}`, method: 'post', data });
+    //提交订单接口
+    reqSubmitOrder(tradeNo, data) {
+        return requests({
+            url: `/order/auth/submitOrder?tradeNo=${tradeNo}`,
+            method: 'post', data
+        });
+    }
 
     // //获取支付信息接口
     // reqPayInfo = (orderId) => requests({ url: `/payment/weixin/createNative/${orderId}`, method: 'get' });

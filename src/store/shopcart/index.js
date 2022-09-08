@@ -61,7 +61,8 @@ let actions = {
                }
           })
           return Promise.all(PromiseAll);
-     }
+     },
+     
 
 };
 let mutations = {

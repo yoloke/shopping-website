@@ -1,9 +1,15 @@
 <template>
   <div class="trade-container">
     <h3 class="title">填写并核对订单信息</h3>
+
     <div class="content">
+      <!-- 收件人信息地方 -->
       <h5 class="receive">收件人信息</h5>
-      <div class="address clearFix" v-for="user in address" :key="user.id">
+      <div
+        class="address clearFix"
+        v-for="(user, index) in address"
+        :key="user.id"
+      >
         <span class="username" :class="{ selected: user.isDefault == '1' }">{{
           user.consignee
         }}</span>
@@ -28,15 +34,20 @@
           <p>配送时间：预计8月10日（周三）09:00-15:00送达</p>
         </div>
       </div>
+      <!-- 商品清单：购物车里面的数据 -->
       <div class="detail">
         <h5>商品清单</h5>
-        <ul class="list clearFix"  v-for="(shop) in tradeInfo.detailArrayList"  :key="shop.skuId"> 
+        <ul
+          class="list clearFix"
+          v-for="(shop, index) in tradeInfo.detailArrayList"
+          :key="shop.skuId"
+        >
           <li>
-          <img :src="shop.imgUrl" alt="" style="width: 100px" />
+            <img :src="shop.imgUrl" alt="" style="width: 100px" />
           </li>
           <li>
             <p>
-               {{ shop.skuName }}
+              {{ shop.skuName }}
             </p>
             <h4>7天无理由退货</h4>
           </li>
@@ -50,9 +61,9 @@
       <div class="bbs">
         <h5>买家留言：</h5>
         <textarea
-          placeholder=" 建议留言前先与商家沟通确认"
+          placeholder="建议留言前先与商家沟通确认"
           class="remarks-cont"
-           v-model="msg"
+          v-model="msg"
         ></textarea>
       </div>
       <div class="line"></div>
@@ -65,8 +76,11 @@
     <div class="money clearFix">
       <ul>
         <li>
-          <b><i>{{ totalSum }}</i> 件商品，总商品金额</b>
-          <span>¥{{ totalPrice }}.00</span>
+          <b
+            ><i>{{ tradeInfo.totalNum }}</i
+            >件商品，总商品金额</b
+          >
+          <span>¥{{ tradeInfo.totalAmount }}.00</span>
         </li>
         <li>
           <b>返现：</b>
@@ -79,28 +93,31 @@
       </ul>
     </div>
     <div class="trade">
-      <div class="price">应付金额:　<span>¥{{totalPrice}}</span></div>
+      <div class="price">
+        应付金额:　<span>¥{{ tradeInfo.totalAmount }}.00</span>
+      </div>
       <div class="receiveInfo">
-        寄送至 <span>{{ defaultUser.fullAddress }}</span
-        ><br />
-        收货人 <span>{{ defaultUser.consignee }}</span>
+        寄送至:
+        <span>{{ defaultUser.fullAddress }}</span>
+        收货人：<span>{{ defaultUser.consignee }}</span>
         <span>{{ defaultUser.phoneNum }}</span>
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <!-- 提交订单这里能用声明式导航吗? -->
+      <a class="subBtn" @click="submitInfo">提交订单</a>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "Trade",
   data() {
     return {
-      msg:""
-    }
+      msg: "",
+    };
   },
   mounted() {
     this.getAddress();
@@ -109,7 +126,11 @@ export default {
   methods: {
     //获取用户地址信息
     getAddress() {
-      this.$store.dispatch("trade/getAddress");
+      this.$store.dispatch("getAddress");
+    },
+    //获取商品清单的数据
+    getShopInfo() {
+      this.$store.dispatch("getShopInfo");
     },
     //修改默认地址
     changeDefault(user) {
@@ -120,34 +141,40 @@ export default {
       });
       user.isDefault = "1";
     },
-    //获取商品清单的数据
-    getShopInfo() {
-      this.$store.dispatch("trade/getShopInfo");
+    //提交订单
+    async submitInfo() {
+      //整理参数:交易编码
+      let tradeNo = this.tradeInfo.tradeNo;
+      let data = {
+        consignee: this.defaultUser.consignee, //付款人的名字
+        consigneeTel: this.defaultUser.phoneNum, //付款人的手机号
+        deliveryAddress: this.defaultUser.fullAddress, //付款人收货地址
+        paymentWay: "ONLINE", //支付方式都是在线支付
+        orderComment: this.msg, //买家留言
+        orderDetailList: this.tradeInfo.detailArrayList, //购物车商品信息
+      };
+
+      //发请求:提交订单
+      try {
+        await this.$store.dispatch("submitInfo", { tradeNo, data });
+        //将来提交订单成功【订单ID生成】，路由跳转pay页面，进行支付
+        this.$router.push({path:'/pay',query:{orderId:this.orderId}});
+        
+      } catch (error) {
+        alert(error.message);
+      }
     },
   },
   computed: {
-    ...mapState("trade", ["address",'tradeInfo']),
+    ...mapState({
+      address: (state) => state.trade.address,
+      tradeInfo: (state) => state.trade.tradeInfo,
+      orderId:state=>state.trade.payId
+    }),
     //默认收件人的信息计算出来
     defaultUser() {
       //find:数组的方法,找到复合条件的元素.回调需要返回布尔值【真|假】，真即为查找结果【如果多个结果都为真，取其中一个】
       return this.address.find((item) => item.isDefault == "1") || {};
-    },
-    //商品个数
-    totalSum() {
-      var sum = 0;
-      this.tradeInfo.detailArrayList.forEach((item) => {
-          sum +=  item.skuNum;
-        
-      });
-      return sum;
-    },
-    //商品总价
-    totalPrice() {
-      var sum = 0;
-    this.tradeInfo.detailArrayList.forEach((item) => {
-          sum += item.orderPrice * item.skuNum;
-      });
-      return sum;
     },
   },
 };
@@ -256,7 +283,7 @@ export default {
       margin: 0 auto;
 
       h5 {
-        line-height: 24px;
+        line-height: 50px;
       }
 
       .info {
@@ -297,7 +324,6 @@ export default {
           line-height: 30px;
 
           p {
-            width: 650px;
             margin-bottom: 20px;
           }
 
@@ -324,7 +350,6 @@ export default {
         width: 100%;
         border-color: #e4e2e2;
         line-height: 1.8;
-        padding: 5px;
         outline: none;
         resize: none;
       }
