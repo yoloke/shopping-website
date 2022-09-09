@@ -1,6 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+import defaultImg from '@/assets/defaultImg.jpg'
+//图片懒加载插件
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload, {
+  //懒加载默认的图片
+  loading: defaultImg
+})
+
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'

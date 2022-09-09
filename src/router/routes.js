@@ -59,11 +59,27 @@ export default [
         name: 'trade',
         path: '/trade',
         component: Trade,
-        meta: { show: true }
+        meta: { show: true },
+        //路由独享守卫 从购物车来才能到结算页
+        // beforeEnter: (to, from, next) => {
+        //     if (from.path === '/shopCart') {
+        //         next()
+        //     } else {
+        //         next(false)
+        //     }
+        // }
     }, {
         path: '/pay',
         component: Pay,
-        meta: { show: true }
+        meta: { show: true },
+        //路由独享守卫 从购物车来才能到结算页
+        beforeEnter: (to, from, next) => {
+            if (from.path === '/trade') {
+                next()
+            } else {
+                next(false)
+            }
+        }
     },
     {
         path: '/paysuccess',

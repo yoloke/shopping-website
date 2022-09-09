@@ -19,7 +19,15 @@
 
 <script>
   export default {
-    name: 'PaySuccess',
+  name: 'PaySuccess',
+    //路由独享守卫 从购物车来才能到结算页
+        beforeRouteEnter: (to, from, next) => {
+            if (from.path === '/pay') {
+                next()
+            } else {
+                next(false)
+            }
+        }
   }
 </script>
 

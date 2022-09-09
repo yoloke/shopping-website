@@ -17,11 +17,11 @@
             <form>
               <div class="input-text clearFix">
                 <span></span>
-                <input type="text" placeholder="邮箱/用户名/手机号" v-model="phone">
+                <el-input class="a" style="border-radius: 0;" type="text" placeholder="邮箱/用户名/手机号" v-model="phone"></el-input>
               </div>
               <div class="input-text clearFix">
                 <span class="pwd"></span>
-                <input type="password" placeholder="请输入密码"  v-model="password">
+                <el-input  class="a" type="password" placeholder="请输入密码"  v-model="password"></el-input>
               </div>
               <div class="setting clearFix">
                 <label class="checkbox inline">
@@ -92,6 +92,14 @@
         alert(error.message);
       }
     },
+     // 自定义表单验证是否勾选协议协议
+   validateAgree(rule, value, callback) {
+      if (value) {
+        callback()
+      } else {
+        callback(new Error('请勾选同意协议'))
+      }
+    }
    }
   }
 </script>
@@ -163,11 +171,12 @@
 
             .input-text {
               margin-bottom: 16px;
+              display: flex;
 
               span {
                 float: left;
-                width: 37px;
-                height: 32px;
+                width: 40px;
+                height: 40px;
                 border: 1px solid #ccc;
                 background: url(~@/assets/icons.png) no-repeat -10px -201px;
                 box-sizing: border-box;
@@ -177,23 +186,10 @@
               .pwd {
                 background-position: -72px -201px;
               }
-
-              input {
-                width: 302px;
-                height: 32px;
-                box-sizing: border-box;
+              /deep/ .el-input__inner {
+                border-radius:0 2px 2px 0;
                 border: 1px solid #ccc;
-                border-left: none;
-                float: left;
-                padding-top: 6px;
-                padding-bottom: 6px;
-                font-size: 14px;
-                line-height: 22px;
-                padding-right: 8px;
-                padding-left: 8px;
-
-                border-radius: 0 2px 2px 0;
-                outline: none;
+                border-left:none;
               }
             }
 
