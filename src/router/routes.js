@@ -10,6 +10,9 @@ import Trade from '@/pages/Trade';
 import Pay from '@/pages/Pay'
 import PaySuccess from '@/pages/PaySuccess';
 import Center from '@/pages/Center'
+
+import MyOrder from '@/pages/Center/MyOrder'
+import TeamOrder from '@/pages/Center/TeamOrder'
 export default [
     {
         path: "*",
@@ -20,13 +23,13 @@ export default [
         name: 'home',
         path: "/home",
         component: Home,
-        meta: {show: true}
+        meta: { show: true }
     },
     {
         name: "search",
         path: "/search/:keyword?",
         component: Search,
-        meta: {show: true}
+        meta: { show: true }
     },
     {
         path: "/login",
@@ -39,7 +42,7 @@ export default [
     {
         path: "/detail/:skuId",
         component: Detail,
-        meta: {show: true}
+        meta: { show: true }
     },
     {
         path: '/addcartsuccess',
@@ -53,7 +56,7 @@ export default [
         component: ShopCart,
     },
     {
-        name:'trade',
+        name: 'trade',
         path: '/trade',
         component: Trade,
         meta: { show: true }
@@ -67,4 +70,75 @@ export default [
         component: PaySuccess,
         meta: { show: true }
     },
+    {
+        path: '/center',
+        redirect: '/center/myorder'
+    },
+    {
+        path: '/center',
+        component: Center,
+        meta: { show: true },
+        //二级路由配置的地方
+        children: [
+            //我的订单
+            {
+                path: 'myorder',
+                component:
+                    MyOrder
+            }
+            ,
+            {
+                path: 'teamorder',
+                component: TeamOrder
+            }
+        ]
+    },
+    // {
+    //     path: '/communication',
+    //     component: () => import('@/pages/Communication/Communication'),
+    //     children: [
+    //         {
+    //             path: 'event',
+    //             component: () => import('@/pages/Communication/EventTest/EventTest'),
+    //             meta: {
+    //                 show: false
+    //             },
+    //         },
+    //         {
+    //             path: 'model',
+    //             component: () => import('@/pages/Communication/ModelTest/ModelTest'),
+    //             meta: {
+    //                 show: false
+    //             },
+    //         },
+    //         {
+    //             path: 'sync',
+    //             component: () => import('@/pages/Communication/SyncTest/SyncTest'),
+    //             meta: {
+    //                 show: false
+    //             },
+    //         },
+    //         {
+    //             path: 'attrs-listeners',
+    //             component: () => import('@/pages/Communication/AttrsListenersTest/AttrsListenersTest'),
+    //             meta: {
+    //                 show: false
+    //             },
+    //         },
+    //         {
+    //             path: 'children-parent',
+    //             component: () => import('@/pages/Communication/ChildrenParentTest/ChildrenParentTest'),
+    //             meta: {
+    //                 show: false
+    //             },
+    //         },
+    //         {
+    //             path: 'scope-slot',
+    //             component: () => import('@/pages/Communication/ScopeSlotTest/ScopeSlotTest'),
+    //             meta: {
+    //                 show: false
+    //             },
+    //         }
+    //     ],
+    // },
 ]

@@ -82,7 +82,6 @@ router.beforeEach(async (to, from, next) => {
             }
         }
     } else {
-        //用户未登录||目前的判断都是放行.将来这里会'回手掏'增加一些判断
         //用户未登录:不能进入/trade、/pay、/paysuccess、/center、/center/myorder  /center/teamorder
         let toPath = to.path;
         if (toPath.indexOf('trade') != -1 || toPath.indexOf('pay') != -1 || toPath.indexOf('center') != -1) {

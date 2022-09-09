@@ -20,8 +20,8 @@
           </p>
         </div>
         <div class="typeList">
-          <a href="###">我的订单</a>
-          <a href="###">我的掌上豹</a>
+          <router-link to="/center">我的订单</router-link>
+          <router-link to="/shopcart">我的购物车</router-link>
           <a href="###">掌上豹会员</a>
           <a href="###">企业采购</a>
           <a href="###">商家服务</a>
@@ -41,15 +41,15 @@ export default {
   //生命周期 - 创建完成（访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（访问DOM元素）
-  mounted() { },
+  mounted() {},
   methods: {
     //退出登录的按钮的回调
-    logout(){
-       //派遣action退出登录
-      this.$store.dispatch('user/logout');
-       this.$router.push('/home')
-    }
-  }
+    logout() {
+      //派遣action退出登录
+      this.$store.dispatch("user/logout");
+      this.$router.push("/home");
+    },
+  },
 };
 </script>
 <style scoped lang="less">
@@ -81,8 +81,8 @@ export default {
           .register {
             padding: 0 5px;
             margin-left: 5px;
-            &::before{
-              content:'|';
+            &::before {
+              content: "|";
               color: #b3aeae;
               margin-right: 8px;
             }
