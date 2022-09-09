@@ -88,8 +88,9 @@
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <a class="subBtn" @click="submitInfo">提交订单</a>
     </div>
+    {{detailArrayList}}
   </div>
 </template>
 
@@ -124,27 +125,52 @@ export default {
     getShopInfo() {
       this.$store.dispatch("trade/getShopInfo");
     },
+     //提交订单
+    async submitInfo() {
+      //整理参数:交易编码
+      let tradeNo = this.tradeInfo.tradeNo;
+      let data = {
+        consignee: this.defaultUser.consignee, //付款人的名字
+        consigneeTel: this.defaultUser.phoneNum, //付款人的手机号
+        deliveryAddress: this.defaultUser.fullAddress, //付款人收货地址
+        paymentWay: "ONLINE", //支付方式都是在线支付
+        orderComment: this.msg, //买家留言
+        orderDetailList: this.tradeInfo.detailArrayList, //购物车商品信息
+      };
+
+      //发请求:提交订单
+      try {
+        await this.$store.dispatch("trade/submitInfo", { tradeNo, data });
+        //将来提交订单成功【订单ID生成】，路由跳转pay页面，进行支付
+        this.$router.push({path:'/pay',query:{orderId:this.payId}});
+        
+      } catch (error) {
+        alert(error.message);
+      }
+    },
   },
   computed: {
-    ...mapState("trade", ["address",'tradeInfo']),
+    ...mapState("trade", ["address",'tradeInfo','payId']),
     //默认收件人的信息计算出来
     defaultUser() {
       //find:数组的方法,找到复合条件的元素.回调需要返回布尔值【真|假】，真即为查找结果【如果多个结果都为真，取其中一个】
       return this.address.find((item) => item.isDefault == "1") || {};
     },
+    detailArrayList() {
+      return this.tradeInfo.detailArrayList ||[]
+    },
     //商品个数
     totalSum() {
       var sum = 0;
-      this.tradeInfo.detailArrayList.forEach((item) => {
+     this.detailArrayList.forEach((item) => {
           sum +=  item.skuNum;
-        
       });
       return sum;
     },
     //商品总价
     totalPrice() {
       var sum = 0;
-    this.tradeInfo.detailArrayList.forEach((item) => {
+    this.detailArrayList.forEach((item) => {
           sum += item.orderPrice * item.skuNum;
       });
       return sum;

@@ -6,6 +6,11 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
+//按需引入
+import { MessageBox } from 'element-ui';
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+
 //全局组件---三级联动组件
 import TypeNav from "@/components/TypeNav"
 Vue.component(TypeNav.name, TypeNav)
@@ -21,7 +26,7 @@ import router from "@/router"
 //引入仓库
 import store from './store'
 
-
+import api from './api'
 
 import '@/mock'
 
@@ -38,6 +43,7 @@ new Vue({
     //此处的this就是这个new Vue()对象
     //网络有很多bus通信总结，原理相同，换汤不换药
     Vue.prototype.$bus = this
+    Vue.prototype.$api = api
   },
   render: h => h(App),
   //注册路由

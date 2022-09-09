@@ -18,7 +18,6 @@ let actions = {
      //修改某一个商品勾选状态
      async changeChecked({ }, { skuId, isChecked }) {
           let result = await api.reqUpdateChecked(skuId, isChecked);
-          console.log(result);
           if (result.code == 200) {
                return 'ok';
           } else {

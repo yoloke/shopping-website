@@ -18,7 +18,6 @@ const actions = {
     //获取商品清单
     async getShopInfo({ commit, state, dispatch }) {
         let result = await api.reqShopInfo();
-        console.log(result);
         if (result.code == 200) {
             commit('GETSHOPINFO', result.data);
             return 'ok';

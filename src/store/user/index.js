@@ -46,7 +46,6 @@ let actions = {
            }
         */
         let result = await api.reqUserLogin(data);
-        console.log(result);
         //登录成功
         if (result.code == 200) {
             commit('SET_TOKEN', result.data.token);

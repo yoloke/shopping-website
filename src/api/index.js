@@ -134,17 +134,29 @@ export default {
             url: `/order/auth/submitOrder?tradeNo=${tradeNo}`,
             method: 'post', data
         });
+    },
+    //获取支付信息接口
+    reqPayInfo(orderId)
+    {
+        return requests({
+            url: `/payment/weixin/createNative/${orderId}`,
+            method: 'get'
+        });
+    },
+    //查询支付结果
+    reqPayResult(orderId) {
+        return requests({
+            url: `/payment/weixin/queryPayStatus/${orderId}`,
+            method: 'get'
+        });
+    },
+    //获取我的订单
+    reqMyOrderList(page, limit) {
+        return requests({
+            url: `/order/auth/${page}/${limit}`,
+            method: 'get'
+        });
     }
-
-    // //获取支付信息接口
-    // reqPayInfo = (orderId) => requests({ url: `/payment/weixin/createNative/${orderId}`, method: 'get' });
-
-    // //查询支付结果
-    // reqPayResult = (orderId) => requests({ url: `/payment/weixin/queryPayStatus/${orderId}`, method: 'get' });
-
-
-    // //获取我的订单
-    // reqMyOrderList = (page, limit) => requests({ url: `/order/auth/${page}/${limit}`, method: 'get' });
 
 
 }
