@@ -74,10 +74,10 @@
               <li class="yui3-u-1-5" v-for="item in goodsList" :key="item.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <router-link :to="`/detail/${item.id}`"
-                      ><img
-                       v-lazy="item.defaultImg ? item.defaultImg: 'http://47.93.148.192:8080/group1/M00/02/DA/rBHu8mGxO7mAIZosAACYibCV0ks310.jpg'"
-                    /></router-link>
+                    <router-link :to="`/detail/${item.id}`">
+                      <!-- <img v-lazy="item.defaultImg ? item.defaultImg: 'http://47.93.148.192:8080/group1/M00/02/DA/rBHu8mGxO7mAIZosAACYibCV0ks310.jpg'"/> -->
+                    <img v-view-lazy="item.defaultImg"/>
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -139,7 +139,7 @@ export default {
         trademark: "", //品牌的搜索条件
         order: "1:desc", //排序的参数 【默认初始值:1:desc】
         pageNo: 1, //当前分页器的页码  【默认初始值:1】
-        pageSize: 10, //代表当前一页显示几条数据 【默认初始值:10】
+        pageSize: 50, //代表当前一页显示几条数据 【默认初始值:10】
       },
     };
   },
@@ -212,6 +212,7 @@ export default {
       //父组件整理参数
       this.searchParams.pageNo = PageNo;
       this.getData();
+      document.documentElement.scrollTop = 0;
     },
   },
   components: {
@@ -267,7 +268,7 @@ export default {
       //再次发请求
       this.getData();
     },
-  },
+  }
 };
 </script>
 

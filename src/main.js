@@ -3,11 +3,12 @@ import App from './App.vue'
 
 import defaultImg from '@/assets/defaultImg.jpg'
 //图片懒加载插件
-import VueLazyload from 'vue-lazyload'
-Vue.use(VueLazyload, {
-  //懒加载默认的图片
-  loading: defaultImg
-})
+
+// import VueLazyload from 'vue-lazyload'
+// Vue.use(VueLazyload, {
+//   //懒加载默认的图片
+//   loading: defaultImg
+// })
 
 
 import ElementUI from 'element-ui';
@@ -27,6 +28,11 @@ Vue.component(TypeNav.name, TypeNav)
 import Pagination from '@/components/Pagination';
 Vue.component(Pagination.name, Pagination)
 
+import a from '@/plugin/a'
+Vue.use(a, {
+  loading: "https://lf-cdn-tos.bytescm.com/obj/static/xitu_extension/static/github.46c47564.png",
+  error:"https://www.baidu.com/img/flexible/logo/pc/result.png"
+})
 
 //引入路由
 import router from "@/router"
