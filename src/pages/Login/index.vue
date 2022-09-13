@@ -92,14 +92,6 @@
         alert(error.message);
       }
     },
-     // 自定义表单验证是否勾选协议协议
-   validateAgree(rule, value, callback) {
-      if (value) {
-        callback()
-      } else {
-        callback(new Error('请勾选同意协议'))
-      }
-    }
    }
   }
 </script>

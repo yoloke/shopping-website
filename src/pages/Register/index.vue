@@ -3,40 +3,55 @@
     <!-- 注册内容 -->
     <div class="register">
       <h3>
-        注册新用户
-        <span class="go"
-          >我有账号，去 <a href="login.html" target="_blank">登陆</a>
-        </span>
+        注册新用户<span class="go"
+          >我有账号，去 <router-link to="/login">登陆</router-link></span
+        >
       </h3>
-      <div class="content">
-        <label>手机号:</label>
-        <input type="text" placeholder="请输入你的手机号" v-model="phone" />
-        <span class="error-msg">错误提示信息</span>
-      </div>
-      <div class="content">
-        <label>验证码:</label>
-        <input type="text" placeholder="请输入验证码" v-model="code" />
-        <!-- <img ref="code" src="http://182.92.128.115/api/user/passport/code" alt="code"> -->
-        <button @click="getCode">获取验证码</button>
-        <span class="error-msg">错误提示信息</span>
-      </div>
-      <div class="content">
-        <label>登录密码:</label>
-        <input type="text" placeholder="请输入你的登录密码"  v-model="password"/>
-        <span class="error-msg">错误提示信息</span>
-      </div>
-      <div class="content">
-        <label>确认密码:</label>
-        <input type="text" placeholder="请输入确认密码"  v-model="password1"/>
-        <span class="error-msg">错误提示信息</span>
-      </div>
-      <div class="controls">
-        <input name="m1" type="checkbox" />
-        <span>同意协议并注册《尚品汇用户协议》</span>
-        <span class="error-msg"></span>
-      </div>
-      <div class="btn">
-        <button @click="register">完成注册</button>
+      <div class="a">
+        <el-form
+          :model="ruleForm"
+          status-icon
+          :rules="rules"
+          ref="ruleForm"
+          label-width="100px"
+          class="demo-ruleForm"
+        >
+          <el-form-item label="手机号" prop="phone">
+            <el-input
+              type="text"
+              v-model="ruleForm.phone"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="验证码" prop="code" :inline="true">
+            <el-input v-model="ruleForm.code"></el-input>
+            <el-button @click="getCode">获取验证码</el-button>
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input
+              type="password"
+              v-model="ruleForm.password"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码" prop="checkPass">
+            <el-input
+              type="password"
+              v-model="ruleForm.checkPass"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="agree">
+             <el-checkbox label="同意协议并注册《掌上豹用户协议》" name="type"  v-model="ruleForm.agree"></el-checkbox>
+          </el-form-item>
+
+          <div class="ab">
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+              <el-button @click="resetForm('ruleForm')">重置</el-button>
+            </el-form-item>
+          </div>
+        </el-form>
       </div>
     </div>
 
@@ -48,12 +63,12 @@
         <li>联系客服</li>
         <li>商家入驻</li>
         <li>营销中心</li>
-        <li>手机尚品汇</li>
+        <li>手机掌上豹</li>
         <li>销售联盟</li>
-        <li>尚品汇社区</li>
+        <li>掌上豹社区</li>
       </ul>
-      <div class="address">地址：北京市昌平区宏福科技园综合楼6层</div>
-      <div class="beian">京ICP备19006430号</div>
+      <div class="address">地址：深圳市南山区科技园综合楼6层</div>
+      <div class="beian">DCP备190887730号</div>
     </div>
   </div>
 </template>
@@ -62,50 +77,116 @@
 export default {
   name: "Register",
   data() {
+    var checkPhone = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入手机号"));
+      } else {
+        if (!this.isCellPhone(value)) {
+          callback(new Error("请输入正确的手机号"));
+        }
+        callback();
+      }
+    };
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.ruleForm.checkPass !== "") {
+          this.$refs.ruleForm.validateField("checkPass");
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.ruleForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
+    // 自定义表单验证是否勾选协议协议
+    var validateAgree = (rule, value, callback) => {
+     value= this.ruleForm.agree
+      if (value) {
+        callback();
+      } else {
+        callback(new Error("请勾选同意协议"));
+      }
+    };
     return {
-       //手机号
-      phone: "15362304491",
-      //登录密码
-      password: "1234",
-      //确认密码
-      password1: "1234",
-      //协议收集
-      agree: true,
-      code:""
+      ruleForm: {
+        phone: "15362304491",
+        password: "",
+        checkPass: "",
+        code: "",
+        agree: true,
+      },
+      rules: {
+        password: [{ validator: validatePass, trigger: "blur" }],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }],
+        phone: [{ validator: checkPhone, trigger: "blur" }],
+        agree: [{ validator: validateAgree, trigger: "blur" }],
+        code: [{ required: true, message: "验证码不能为空", trigger: 'change' }],
+      },
     };
   },
   methods: {
-   //获取验证码按钮的回调
+    //验证手机号
+    isCellPhone(val) {
+      if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    //获取验证码按钮的回调
     async getCode() {
-      const { phone } = this;
-      //先不处理表单验证业务
-      if (phone) {
+      if (this.ruleForm.phone) {
         try {
           //获取验证码成功
-          await this.$store.dispatch("user/getCode", phone);
+          await this.$store.dispatch("user/getCode", this.ruleForm.phone);
           //修改VC身上的code属性,让验证码自动展示
-          this.code = this.$store.state.user.code;
+          this.ruleForm.code = this.$store.state.user.code;
         } catch (error) {}
       }
     },
-     //注册按钮的回调
+    //提交按钮
+     submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.register()
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+    //注册按钮的回调
     async register() {
       //解构出参数
-      const { phone, code, password, password1 } = this;
+      const { phone, code, password, checkPass } = this.ruleForm;
+      console.log(phone, code, password, checkPass);
       //目前不做表单验证
-      if (phone && code && password == password1) {
-        //通知vuex发请求，进行用户的注册
-        try {
-          //注册成功
-          await this.$store.dispatch("user/registerUser", { phone, code, password });
-          //让用户跳转到登录页面进行登录
-          this.$router.push('/login');
-        } catch (error) {
-          //注册失败
-          console.log("hhhhhhhh");
-          alert(error.message);
-        }
+
+      //通知vuex发请求，进行用户的注册
+      try {
+        //注册成功
+        await this.$store.dispatch("user/registerUser", {
+          phone,
+          code,
+          password,
+        });
+        //让用户跳转到登录页面进行登录
+        this.$router.push("/login");
+      } catch (error) {
+        //注册失败
+        alert(error.message);
       }
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     },
   },
 };
@@ -115,7 +196,7 @@ export default {
 .register-container {
   .register {
     width: 1200px;
-    height: 445px;
+    height: 800px;
     border: 1px solid rgb(223, 223, 223);
     margin: 0 auto;
 
@@ -131,89 +212,36 @@ export default {
       span {
         font-size: 14px;
         float: right;
-
         a {
           color: #e1251b;
         }
       }
     }
+    .a {
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 800px;
+      height: 500px;
 
-    div:nth-of-type(1) {
-      margin-top: 40px;
-    }
-
-    .content {
-      padding-left: 390px;
-      margin-bottom: 18px;
-      position: relative;
-
-      label {
-        font-size: 14px;
-        width: 96px;
-        text-align: right;
-        display: inline-block;
+      /deep/ .el-input__inner {
+        display: inline;
       }
-
-      input {
-        width: 270px;
-        height: 38px;
-        padding-left: 8px;
+      /deep/ .el-form-item__label {
+        text-align: center;
+        color: #606266;
+        line-height: 40px;
+        padding: 0;
         box-sizing: border-box;
-        margin-left: 5px;
-        outline: none;
-        border: 1px solid #999;
       }
-
-      // img {
-      //   vertical-align: sub;
-      // }
-      button {
-        width: 80px;
-        height: 37px;
-        padding: 0 5px;
-        margin-left: 10px;
-        border: 1px solid #999;
-        border-radius: 5px;
-      }
-
-      .error-msg {
-        position: absolute;
-        top: 100%;
-        left: 495px;
-        color: red;
+      /deep/ .el-button {
+        display: inline;
       }
     }
-
-    .controls {
-      text-align: center;
-      position: relative;
-
-      input {
-        vertical-align: middle;
-      }
-
-      .error-msg {
-        position: absolute;
-        top: 100%;
-        left: 495px;
-        color: red;
-      }
-    }
-
-    .btn {
-      text-align: center;
-      line-height: 36px;
-      margin: 17px 0 0 55px;
-
-      button {
-        outline: none;
-        width: 270px;
-        height: 36px;
-        background: #e1251b;
-        color: #fff !important;
-        display: inline-block;
-        font-size: 16px;
-      }
+    .ab {
+      display: flex;
+      justify-content: center;
     }
   }
 

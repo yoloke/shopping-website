@@ -1,24 +1,21 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import defaultImg from '@/assets/defaultImg.jpg'
-//图片懒加载插件
 
-// import VueLazyload from 'vue-lazyload'
-// Vue.use(VueLazyload, {
-//   //懒加载默认的图片
-//   loading: defaultImg
-// })
-
-
-import ElementUI from 'element-ui';
+// import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
-Vue.use(ElementUI)
+// Vue.use(ElementUI)
 
 //按需引入
-import { MessageBox } from 'element-ui';
+import { MessageBox, Input, Form, FormItem,Button,Checkbox } from 'element-ui';
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
+Vue.use(Input)
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Checkbox);
+Vue.use(Button);
+
 
 //全局组件---三级联动组件
 import TypeNav from "@/components/TypeNav"
@@ -30,7 +27,7 @@ Vue.component(Pagination.name, Pagination)
 
 import a from '@/plugin/a'
 Vue.use(a, {
-  loading: "https://lf-cdn-tos.bytescm.com/obj/static/xitu_extension/static/github.46c47564.png",
+  loading: "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-sklaAbYPbAAHJf20K7J4980.jpg",
   error:"https://www.baidu.com/img/flexible/logo/pc/result.png"
 })
 

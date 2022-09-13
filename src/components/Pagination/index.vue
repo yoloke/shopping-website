@@ -21,7 +21,7 @@
         <li
           v-for="page in startAndEnd.end"
           :key="page"
-          v-if="page >= startAndEnd.start"
+          v-show="page >= startAndEnd.start"
           :class="{active:pageNo==page}"
           @click="$emit('getPageNo', page)"
         >
