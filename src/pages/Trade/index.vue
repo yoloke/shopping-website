@@ -90,7 +90,6 @@
     <div class="sub clearFix">
       <a class="subBtn" @click="submitInfo">提交订单</a>
     </div>
-    {{detailArrayList}}
   </div>
 </template>
 

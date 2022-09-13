@@ -35,8 +35,8 @@
         </h4>
         <ul>
           <li>支付帐号：11111111</li>
-          <li>密码：111111</li>
-          <li>支付密码：111111</li>
+          <li>密码：123456</li>
+          <li>支付密码：123456</li>
         </ul>
       </div>
       <div class="checkout-steps">
@@ -169,7 +169,7 @@ export default {
       this.timer = setInterval(async () => {
         //发请求获取支付结果
         let result = await this.$api.reqPayResult(this.payInfo.orderId);
-        console.log(result);
+       
         //返回数据当中：code=200代表支付成功  code=205未支付
         if (result.code == 200) {
           //支付成功了

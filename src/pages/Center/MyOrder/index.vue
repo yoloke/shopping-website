@@ -163,7 +163,6 @@ export default {
       //获取我的订单的数据:page|limit
       const { page, limit } = this;
       let result = await this.$api.reqMyOrderList(page, limit);
-      console.log(result);
       if (result.code == 200) {
         this.list = result.data.records;
         this.total = result.data.total;
