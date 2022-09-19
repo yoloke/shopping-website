@@ -7,7 +7,7 @@ let state = {
     token: localStorage.getItem("TOKEN"),
     //用户名
     nickName: '',
-    userId:''
+    userId: ''
 };
 let actions = {
     //获取验证码
@@ -66,7 +66,8 @@ let actions = {
             commit('SET_USERINFO', result.data.nickName);
             return 'ok';
         } else {
-            return Promise.reject();
+            // return Promise.reject();
+            return null
         }
     },
     //退出登录的业务

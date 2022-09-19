@@ -1,6 +1,8 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
+  //打包关闭map  map主要是映射错误代码的位置
+  productionSourceMap:false,
   lintOnSave: false,//关闭eslint校验工具
   //配置指定的端口号
   devServer: {
