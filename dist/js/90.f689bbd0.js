@@ -1,0 +1,1 @@
+"use strict";(self["webpackChunkapp"]=self["webpackChunkapp"]||[]).push([[90],{2090:function(e,n,u){u.r(n),u.d(n,{default:function(){return c}});var r=function(){var e=this,n=e._self._c;return n("div",[e._v("我是团购订单")])},t=[],a={name:"teamOrder"},l=a,p=u(1001),s=(0,p.Z)(l,r,t,!1,null,"41beb87a",null),c=s.exports}}]);
