@@ -43,14 +43,14 @@ const mutations = {
         address = [
             {
                 "id": 1,
-                "userAddress": "北京市昌平区北七家镇宏福苑南一区0号楼0单元010",
+                "userAddress": "深圳市平区北七家镇宏福苑南一区0号楼0单元010",
                 "userId": 2,
                 "provinceId": 1,
                 "consignee": "史蒂芬啊",
                 "phoneNum": "18101085318",
                 "isDefault": "0",
                 "regionId": 1,
-                "fullAddress": "北京北京市昌平区北七家镇宏福苑南一区0号楼0单元010"
+                "fullAddress": "深圳深圳市平区北七家镇宏福苑南一区0号楼0单元010"
             },
             {
                 "id": 2,
@@ -61,7 +61,7 @@ const mutations = {
                 "phoneNum": "18801999967",
                 "isDefault": "0",
                 "regionId": 1,
-                "fullAddress": "北京通州区"
+                "fullAddress": "深圳通州区"
             },
             {
                 "id": 3,
@@ -72,7 +72,7 @@ const mutations = {
                 "phoneNum": "13812341234",
                 "isDefault": "0",
                 "regionId": 1,
-                "fullAddress": "北京宏福苑南二区"
+                "fullAddress": "深圳宏福苑南二区"
             }
         ]
         address[0].isDefault = 1

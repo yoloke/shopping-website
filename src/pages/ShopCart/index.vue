@@ -446,6 +446,9 @@ export default {
   }
 
   .cart-tool {
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
     overflow: hidden;
     border: 1px solid #ddd;
 
@@ -460,6 +463,7 @@ export default {
 
       input {
         vertical-align: middle;
+        margin-right: 20px;
       }
     }
 
@@ -480,6 +484,8 @@ export default {
     }
 
     .money-box {
+      display: flex;
+      align-items: center;
       float: right;
 
       .chosed {

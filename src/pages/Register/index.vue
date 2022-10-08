@@ -196,7 +196,7 @@ export default {
 .register-container {
   .register {
     width: 1200px;
-    height: 800px;
+    height: 520px;
     border: 1px solid rgb(223, 223, 223);
     margin: 0 auto;
 
